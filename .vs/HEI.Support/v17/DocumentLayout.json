@@ -1,65 +1,85 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\",
+  "WorkspaceRootPath": "D:\\HEI\\HEI.Support\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|c:\\users\\kshetiz\\source\\repos\\hei.support\\hei.support\\areas\\admin\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\areas\\admin\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|c:\\users\\kshetiz\\source\\repos\\hei.support\\hei.support\\service\\implementation\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\service\\implementation\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\service\\implementation\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|c:\\users\\kshetiz\\source\\repos\\hei.support\\hei.support\\areas\\admin\\models\\changepasswordviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\areas\\admin\\models\\changepasswordviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\hei.support.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\hei.support.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|c:\\users\\kshetiz\\source\\repos\\hei.support\\hei.support\\service\\implementation\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\service\\implementation\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|c:\\users\\kshetiz\\source\\repos\\hei.support\\hei.support\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|c:\\users\\kshetiz\\source\\repos\\hei.support\\hei.support\\areas\\admin\\models\\smtpconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\areas\\admin\\models\\smtpconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\areas\\admin\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\areas\\admin\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|c:\\users\\kshetiz\\source\\repos\\hei.support\\hei.support\\service\\interface\\iaccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\service\\interface\\iaccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\service\\interface\\iaccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|c:\\users\\kshetiz\\source\\repos\\hei.support\\hei.support\\areas\\admin\\models\\forgetpasswordviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\areas\\admin\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\areas\\admin\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\service\\interface\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\service\\interface\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\areas\\admin\\models\\changepasswordviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\areas\\admin\\models\\changepasswordviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\service\\implementation\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\service\\implementation\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\areas\\admin\\models\\smtpconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\areas\\admin\\models\\smtpconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\areas\\admin\\models\\forgetpasswordviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\areas\\admin\\models\\forgetpasswordviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|c:\\users\\kshetiz\\source\\repos\\hei.support\\hei.support\\areas\\admin\\models\\resetpasswordviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\areas\\admin\\models\\resetpasswordviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\areas\\admin\\models\\resetpasswordviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|c:\\users\\kshetiz\\source\\repos\\hei.support\\hei.support\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|c:\\users\\kshetiz\\source\\repos\\hei.support\\hei.support\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|c:\\users\\kshetiz\\source\\repos\\hei.support\\hei.support\\data\\entities\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\data\\entities\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\data\\entities\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|c:\\users\\kshetiz\\source\\repos\\hei.support\\hei.support\\areas\\admin\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\areas\\admin\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\areas\\admin\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|c:\\users\\kshetiz\\source\\repos\\hei.support\\hei.support\\scaffoldingreadme.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\scaffoldingreadme.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\scaffoldingreadme.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|c:\\users\\kshetiz\\source\\repos\\hei.support\\hei.support\\migrations\\20240911110713_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\migrations\\20240911110713_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\migrations\\20240911110713_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -70,17 +90,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "AccountService.cs",
-              "DocumentMoniker": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Service\\Implementation\\AccountService.cs",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Service\\Implementation\\AccountService.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Service\\Implementation\\AccountService.cs",
-              "ToolTip": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Service\\Implementation\\AccountService.cs",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\Service\\Implementation\\AccountService.cs",
               "RelativeToolTip": "HEI.Support\\Service\\Implementation\\AccountService.cs",
-              "ViewState": "AgIAAB0AAAAAAAAAAAA5wCcAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAACoAAAAAAAAAAADwvxkAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-11T11:12:59.668Z",
               "IsPinned": true,
@@ -88,65 +108,51 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ChangePasswordViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Areas\\Admin\\Models\\ChangePasswordViewModel.cs",
-              "RelativeDocumentMoniker": "HEI.Support\\Areas\\Admin\\Models\\ChangePasswordViewModel.cs",
-              "ToolTip": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Areas\\Admin\\Models\\ChangePasswordViewModel.cs",
-              "RelativeToolTip": "HEI.Support\\Areas\\Admin\\Models\\ChangePasswordViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAABAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-12T05:15:28.09Z",
+              "DocumentIndex": 1,
+              "Title": "HEI.Support",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\HEI.Support.csproj",
+              "RelativeDocumentMoniker": "HEI.Support\\HEI.Support.csproj",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\HEI.Support.csproj",
+              "RelativeToolTip": "HEI.Support\\HEI.Support.csproj",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAAsAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-09-12T11:27:43.731Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\appsettings.json",
+              "RelativeDocumentMoniker": "HEI.Support\\appsettings.json",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\appsettings.json",
+              "RelativeToolTip": "HEI.Support\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-09-12T10:15:38.944Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "SMTPConfig.cs",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Models\\SMTPConfig.cs",
+              "RelativeDocumentMoniker": "HEI.Support\\Areas\\Admin\\Models\\SMTPConfig.cs",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Models\\SMTPConfig.cs",
+              "RelativeToolTip": "HEI.Support\\Areas\\Admin\\Models\\SMTPConfig.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-12T04:40:17.038Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "SMTPConfig.cs",
-              "DocumentMoniker": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Areas\\Admin\\Models\\SMTPConfig.cs",
-              "RelativeDocumentMoniker": "HEI.Support\\Areas\\Admin\\Models\\SMTPConfig.cs",
-              "ToolTip": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Areas\\Admin\\Models\\SMTPConfig.cs",
-              "RelativeToolTip": "HEI.Support\\Areas\\Admin\\Models\\SMTPConfig.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAwAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-12T04:40:17.038Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "EmailService.cs",
-              "DocumentMoniker": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Service\\Implementation\\EmailService.cs",
-              "RelativeDocumentMoniker": "HEI.Support\\Service\\Implementation\\EmailService.cs",
-              "ToolTip": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Service\\Implementation\\EmailService.cs",
-              "RelativeToolTip": "HEI.Support\\Service\\Implementation\\EmailService.cs",
-              "ViewState": "AgIAAF8AAAAAAAAAAAAgwG0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-12T04:10:43.209Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AccountController.cs",
-              "DocumentMoniker": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Areas\\Admin\\Controllers\\AccountController.cs",
-              "RelativeDocumentMoniker": "HEI.Support\\Areas\\Admin\\Controllers\\AccountController.cs",
-              "ToolTip": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Areas\\Admin\\Controllers\\AccountController.cs",
-              "RelativeToolTip": "HEI.Support\\Areas\\Admin\\Controllers\\AccountController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-11T10:43:26.122Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
               "Title": "IAccountService.cs",
-              "DocumentMoniker": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Service\\Interface\\IAccountService.cs",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Service\\Interface\\IAccountService.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Service\\Interface\\IAccountService.cs",
-              "ToolTip": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Service\\Interface\\IAccountService.cs",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\Service\\Interface\\IAccountService.cs",
               "RelativeToolTip": "HEI.Support\\Service\\Interface\\IAccountService.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAsAAABBAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA4AAABtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-12T04:20:32.22Z",
               "EditorCaption": ""
@@ -154,49 +160,123 @@
             {
               "$type": "Document",
               "DocumentIndex": 4,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "HEI.Support\\Areas\\Admin\\Controllers\\AccountController.cs",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "HEI.Support\\Areas\\Admin\\Controllers\\AccountController.cs",
+              "ViewState": "AgIAAIUAAAAAAAAAAIAwwJAAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-11T10:43:26.122Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Program.cs",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Program.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Program.cs",
-              "ToolTip": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Program.cs",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\Program.cs",
               "RelativeToolTip": "HEI.Support\\Program.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAmwBYAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAABwAAAAAAAAAAAAcwCQAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-11T10:44:21.167Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ForgetPasswordViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Areas\\Admin\\Models\\ForgetPasswordViewModel.cs",
-              "RelativeDocumentMoniker": "HEI.Support\\Areas\\Admin\\Models\\ForgetPasswordViewModel.cs",
-              "ToolTip": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Areas\\Admin\\Models\\ForgetPasswordViewModel.cs",
-              "RelativeToolTip": "HEI.Support\\Areas\\Admin\\Models\\ForgetPasswordViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Views\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "HEI.Support\\Areas\\Admin\\Views\\Account\\Login.cshtml",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Views\\Account\\Login.cshtml",
+              "RelativeToolTip": "HEI.Support\\Areas\\Admin\\Views\\Account\\Login.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-09-12T09:13:19.553Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "EmailService.cs",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Service\\Implementation\\EmailService.cs",
+              "RelativeDocumentMoniker": "HEI.Support\\Service\\Implementation\\EmailService.cs",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\Service\\Implementation\\EmailService.cs",
+              "RelativeToolTip": "HEI.Support\\Service\\Implementation\\EmailService.cs",
+              "ViewState": "AgIAAF8AAAAAAAAAAAAgwG0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-12T04:06:02.706Z",
+              "WhenOpened": "2024-09-12T04:10:43.209Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "IEmailService.cs",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Service\\Interface\\IEmailService.cs",
+              "RelativeDocumentMoniker": "HEI.Support\\Service\\Interface\\IEmailService.cs",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\Service\\Interface\\IEmailService.cs",
+              "RelativeToolTip": "HEI.Support\\Service\\Interface\\IEmailService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-12T09:53:01.128Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "ResetPasswordViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Areas\\Admin\\Models\\ResetPasswordViewModel.cs",
-              "RelativeDocumentMoniker": "HEI.Support\\Areas\\Admin\\Models\\ResetPasswordViewModel.cs",
-              "ToolTip": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Areas\\Admin\\Models\\ResetPasswordViewModel.cs",
-              "RelativeToolTip": "HEI.Support\\Areas\\Admin\\Models\\ResetPasswordViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-12T04:24:23.419Z",
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "HEI.Support\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "HEI.Support\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAABwAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-09-12T09:49:46.897Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 9,
+              "Title": "ChangePasswordViewModel.cs",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Models\\ChangePasswordViewModel.cs",
+              "RelativeDocumentMoniker": "HEI.Support\\Areas\\Admin\\Models\\ChangePasswordViewModel.cs",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Models\\ChangePasswordViewModel.cs",
+              "RelativeToolTip": "HEI.Support\\Areas\\Admin\\Models\\ChangePasswordViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-12T05:15:28.09Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ForgetPasswordViewModel.cs",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Models\\ForgetPasswordViewModel.cs",
+              "RelativeDocumentMoniker": "HEI.Support\\Areas\\Admin\\Models\\ForgetPasswordViewModel.cs",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Models\\ForgetPasswordViewModel.cs",
+              "RelativeToolTip": "HEI.Support\\Areas\\Admin\\Models\\ForgetPasswordViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-12T04:06:02.706Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ResetPasswordViewModel.cs",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Models\\ResetPasswordViewModel.cs",
+              "RelativeDocumentMoniker": "HEI.Support\\Areas\\Admin\\Models\\ResetPasswordViewModel.cs",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Models\\ResetPasswordViewModel.cs",
+              "RelativeToolTip": "HEI.Support\\Areas\\Admin\\Models\\ResetPasswordViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-12T04:24:23.419Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
               "Title": "20240911110713_Initial.cs",
-              "DocumentMoniker": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Migrations\\20240911110713_Initial.cs",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Migrations\\20240911110713_Initial.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Migrations\\20240911110713_Initial.cs",
-              "ToolTip": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Migrations\\20240911110713_Initial.cs",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\Migrations\\20240911110713_Initial.cs",
               "RelativeToolTip": "HEI.Support\\Migrations\\20240911110713_Initial.cs",
               "ViewState": "AgIAAF4AAAAAAAAAAAAQwGkAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -204,11 +284,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 15,
               "Title": "appsettings.Development.json",
-              "DocumentMoniker": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\appsettings.Development.json",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\appsettings.Development.json",
               "RelativeDocumentMoniker": "HEI.Support\\appsettings.Development.json",
-              "ToolTip": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\appsettings.Development.json",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\appsettings.Development.json",
               "RelativeToolTip": "HEI.Support\\appsettings.Development.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAB5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
@@ -216,11 +296,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 14,
               "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Data\\ApplicationDbContext.cs",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Data\\ApplicationDbContext.cs",
-              "ToolTip": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\Data\\ApplicationDbContext.cs",
               "RelativeToolTip": "HEI.Support\\Data\\ApplicationDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -228,11 +308,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 16,
               "Title": "ApplicationUser.cs",
-              "DocumentMoniker": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Data\\Entities\\ApplicationUser.cs",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Data\\Entities\\ApplicationUser.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Data\\Entities\\ApplicationUser.cs",
-              "ToolTip": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Data\\Entities\\ApplicationUser.cs",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\Data\\Entities\\ApplicationUser.cs",
               "RelativeToolTip": "HEI.Support\\Data\\Entities\\ApplicationUser.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -240,11 +320,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 17,
               "Title": "AdminController.cs",
-              "DocumentMoniker": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Areas\\Admin\\Controllers\\AdminController.cs",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Controllers\\AdminController.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Areas\\Admin\\Controllers\\AdminController.cs",
-              "ToolTip": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\Areas\\Admin\\Controllers\\AdminController.cs",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Controllers\\AdminController.cs",
               "RelativeToolTip": "HEI.Support\\Areas\\Admin\\Controllers\\AdminController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -252,11 +332,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 18,
               "Title": "ScaffoldingReadMe.txt",
-              "DocumentMoniker": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\ScaffoldingReadMe.txt",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\ScaffoldingReadMe.txt",
               "RelativeDocumentMoniker": "HEI.Support\\ScaffoldingReadMe.txt",
-              "ToolTip": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\ScaffoldingReadMe.txt",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\ScaffoldingReadMe.txt",
               "RelativeToolTip": "HEI.Support\\ScaffoldingReadMe.txt",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",

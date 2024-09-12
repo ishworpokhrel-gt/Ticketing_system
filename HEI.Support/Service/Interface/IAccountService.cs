@@ -12,7 +12,7 @@ namespace HEI.Support.Service.Interface
         Task<ResponseViewModel> LoginAsync(LoginViewModel model);
         Task<ResponseViewModel> ForgotPasswordAsync(ForgetPasswordViewModel model);
         Task<ResponseViewModel> ResetPasswordAsync(ResetPasswordViewModel model);
-        Task<ResponseViewModel> ChangePasswordAsync(ChangePassword changePassword, ApplicationUser user);
+        Task<ResponseViewModel> ChangePasswordAsync(ChangePasswordViewModel changePassword, ApplicationUser user);
         Task<ResponseViewModel> RegisterEmployeeAsync(RegisterViewModel model);
     }
 }

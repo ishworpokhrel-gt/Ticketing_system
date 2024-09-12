@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\HEI.Support.csproj": {}
+    "D:\\HEI\\HEI.Support\\HEI.Support\\HEI.Support.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\HEI.Support.csproj": {
+    "D:\\HEI\\HEI.Support\\HEI.Support\\HEI.Support.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\HEI.Support.csproj",
+        "projectUniqueName": "D:\\HEI\\HEI.Support\\HEI.Support\\HEI.Support.csproj",
         "projectName": "HEI.Support",
-        "projectPath": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\HEI.Support.csproj",
+        "projectPath": "D:\\HEI\\HEI.Support\\HEI.Support\\HEI.Support.csproj",
         "packagesPath": "C:\\Users\\Kshetiz\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Kshetiz\\source\\repos\\HEI.Support\\HEI.Support\\obj\\",
+        "outputPath": "D:\\HEI\\HEI.Support\\HEI.Support\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -79,7 +79,7 @@
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[8.0.4, )"
+              "version": "[8.0.5, )"
             },
             "Npgsql": {
               "target": "Package",

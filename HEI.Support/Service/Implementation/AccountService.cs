@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace HEI.Support.Service.Implementation
 {
-    public class AccountService
+    public class AccountService : IAccountService
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -338,6 +338,14 @@ namespace HEI.Support.Service.Implementation
             };
         }
 
+        public Task<ResponseViewModel> SeedRolesAsync()
+        {
+            throw new NotImplementedException();
+        }
 
+        public Task<ResponseViewModel> ChangePasswordAsync(ChangePassword changePassword, ApplicationUser user)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
