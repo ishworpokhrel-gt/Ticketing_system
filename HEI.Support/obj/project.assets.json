@@ -6857,23 +6857,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Kshetiz\\.nuget\\packages\\": {},
+    "C:\\Users\\Janak Bhatt\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\HEI\\HEI.Support\\HEI.Support\\HEI.Support.csproj",
+      "projectUniqueName": "D:\\Hei.Support\\HEI.Support\\HEI.Support.csproj",
       "projectName": "HEI.Support",
-      "projectPath": "D:\\HEI\\HEI.Support\\HEI.Support\\HEI.Support.csproj",
-      "packagesPath": "C:\\Users\\Kshetiz\\.nuget\\packages\\",
-      "outputPath": "D:\\HEI\\HEI.Support\\HEI.Support\\obj\\",
+      "projectPath": "D:\\Hei.Support\\HEI.Support\\HEI.Support.csproj",
+      "packagesPath": "C:\\Users\\Janak Bhatt\\.nuget\\packages\\",
+      "outputPath": "D:\\Hei.Support\\HEI.Support\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Kshetiz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Janak Bhatt\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "D:\\HEI\\HEI.Support\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\service\\implementation\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\service\\implementation\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\hei.support.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\hei.support.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
@@ -17,10 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\service\\interface\\iaccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\service\\interface\\iaccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\service\\implementation\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|solutionrelative:hei.support\\service\\implementation\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0801FFD9-35E4-4069-BDFF-B86E102E003D}|HEI.Support\\HEI.Support.csproj|d:\\hei\\hei.support\\hei.support\\areas\\admin\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -86,11 +90,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "AccountService.cs",
               "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Service\\Implementation\\AccountService.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Service\\Implementation\\AccountService.cs",
@@ -104,7 +108,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
+              "Title": "HEI.Support",
+              "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\HEI.Support.csproj",
+              "RelativeDocumentMoniker": "HEI.Support\\HEI.Support.csproj",
+              "ToolTip": "D:\\HEI\\HEI.Support\\HEI.Support\\HEI.Support.csproj",
+              "RelativeToolTip": "HEI.Support\\HEI.Support.csproj",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAAsAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-09-12T11:27:43.731Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\appsettings.json",
               "RelativeDocumentMoniker": "HEI.Support\\appsettings.json",
@@ -117,7 +134,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "SMTPConfig.cs",
               "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Models\\SMTPConfig.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Areas\\Admin\\Models\\SMTPConfig.cs",
@@ -129,7 +146,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "IAccountService.cs",
               "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Service\\Interface\\IAccountService.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Service\\Interface\\IAccountService.cs",
@@ -142,7 +159,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "AccountController.cs",
               "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Areas\\Admin\\Controllers\\AccountController.cs",
@@ -155,7 +172,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Program.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Program.cs",
@@ -168,7 +185,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Login.cshtml",
               "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Views\\Account\\Login.cshtml",
               "RelativeDocumentMoniker": "HEI.Support\\Areas\\Admin\\Views\\Account\\Login.cshtml",
@@ -181,7 +198,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "EmailService.cs",
               "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Service\\Implementation\\EmailService.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Service\\Implementation\\EmailService.cs",
@@ -193,7 +210,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "IEmailService.cs",
               "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Service\\Interface\\IEmailService.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Service\\Interface\\IEmailService.cs",
@@ -206,7 +223,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "HEI.Support\\Views\\Shared\\_Layout.cshtml",
@@ -219,7 +236,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "ChangePasswordViewModel.cs",
               "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Models\\ChangePasswordViewModel.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Areas\\Admin\\Models\\ChangePasswordViewModel.cs",
@@ -231,7 +248,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "ForgetPasswordViewModel.cs",
               "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Models\\ForgetPasswordViewModel.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Areas\\Admin\\Models\\ForgetPasswordViewModel.cs",
@@ -243,7 +260,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "ResetPasswordViewModel.cs",
               "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Models\\ResetPasswordViewModel.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Areas\\Admin\\Models\\ResetPasswordViewModel.cs",
@@ -255,7 +272,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "20240911110713_Initial.cs",
               "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Migrations\\20240911110713_Initial.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Migrations\\20240911110713_Initial.cs",
@@ -267,7 +284,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\appsettings.Development.json",
               "RelativeDocumentMoniker": "HEI.Support\\appsettings.Development.json",
@@ -279,7 +296,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Data\\ApplicationDbContext.cs",
@@ -291,7 +308,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "ApplicationUser.cs",
               "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Data\\Entities\\ApplicationUser.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Data\\Entities\\ApplicationUser.cs",
@@ -303,7 +320,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "AdminController.cs",
               "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\Areas\\Admin\\Controllers\\AdminController.cs",
               "RelativeDocumentMoniker": "HEI.Support\\Areas\\Admin\\Controllers\\AdminController.cs",
@@ -315,7 +332,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "ScaffoldingReadMe.txt",
               "DocumentMoniker": "D:\\HEI\\HEI.Support\\HEI.Support\\ScaffoldingReadMe.txt",
               "RelativeDocumentMoniker": "HEI.Support\\ScaffoldingReadMe.txt",
