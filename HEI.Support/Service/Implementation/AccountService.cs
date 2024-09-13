@@ -7,12 +7,9 @@ using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Text;
 using HEI.Support.Areas.Admin.Models;
-using HEI.Support.Models;
 using HEI.Support.Service.Interface;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace HEI.Support.Service.Implementation
 {
