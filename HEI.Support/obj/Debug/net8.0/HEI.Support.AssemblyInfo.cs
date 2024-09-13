@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HEI.Support")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a9c58c99b52925b62909b4fda389d3acc9dc4277")]
 [assembly: System.Reflection.AssemblyProductAttribute("HEI.Support")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HEI.Support")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
