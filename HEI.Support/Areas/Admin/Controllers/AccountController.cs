@@ -27,9 +27,7 @@ namespace HEI.Support.Areas.Admin.Controllers
         }
 
         // Login POST
-        [AllowAnonymous]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel loginModel)
         {
             if (!ModelState.IsValid)
@@ -46,7 +44,6 @@ namespace HEI.Support.Areas.Admin.Controllers
         }
 
         // Register GET
-        [AllowAnonymous]
         [HttpGet]
         public IActionResult Register()
         {
@@ -54,9 +51,7 @@ namespace HEI.Support.Areas.Admin.Controllers
         }
 
         // Register POST
-        [AllowAnonymous]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel registerModel)
         {
             if (!ModelState.IsValid)
@@ -73,7 +68,6 @@ namespace HEI.Support.Areas.Admin.Controllers
         }
 
         // Forgot Password GET
-        [AllowAnonymous]
         [HttpGet]
         public IActionResult ForgotPassword()
         {
@@ -81,9 +75,7 @@ namespace HEI.Support.Areas.Admin.Controllers
         }
 
         // Forgot Password POST
-        [AllowAnonymous]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(ForgetPasswordViewModel model)
         {
             if (!ModelState.IsValid)
@@ -101,7 +93,6 @@ namespace HEI.Support.Areas.Admin.Controllers
         }
 
         // Reset Password GET
-        [AllowAnonymous]
         [HttpGet]
         public IActionResult ResetPassword(string code = null)
         {
@@ -109,9 +100,7 @@ namespace HEI.Support.Areas.Admin.Controllers
         }
 
         // Reset Password POST
-        [AllowAnonymous]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)

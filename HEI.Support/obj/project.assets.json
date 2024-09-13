@@ -6857,23 +6857,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Janak Bhatt\\.nuget\\packages\\": {},
+    "C:\\Users\\Kshetiz\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\HEI_JANAK\\Hei.Support\\HEI.Support\\HEI.Support.csproj",
+      "projectUniqueName": "D:\\HEI\\HEI.Support\\HEI.Support\\HEI.Support.csproj",
       "projectName": "HEI.Support",
-      "projectPath": "D:\\HEI_JANAK\\Hei.Support\\HEI.Support\\HEI.Support.csproj",
-      "packagesPath": "C:\\Users\\Janak Bhatt\\.nuget\\packages\\",
-      "outputPath": "D:\\HEI_JANAK\\Hei.Support\\HEI.Support\\obj\\",
+      "projectPath": "D:\\HEI\\HEI.Support\\HEI.Support\\HEI.Support.csproj",
+      "packagesPath": "C:\\Users\\Kshetiz\\.nuget\\packages\\",
+      "outputPath": "D:\\HEI\\HEI.Support\\HEI.Support\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Janak Bhatt\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Kshetiz\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6972,13 +6972,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1900",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://api.nuget.org/v3/index.json."
-    }
-  ]
+  }
 }
