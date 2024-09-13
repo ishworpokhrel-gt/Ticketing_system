@@ -122,14 +122,6 @@ namespace HEI.Support.Service.Implementation
                 };
             }
 
-            // Add a Default USER Role to all users
-
-            foreach (var role in model.Roles)
-            {
-                await _userManager.AddToRoleAsync(newUser, role);
-            }
-
-
             return new ResponseViewModel()
             {
                 IsSucceed = true,
@@ -322,14 +314,6 @@ namespace HEI.Support.Service.Implementation
                     Message = errorString
                 };
             }
-
-            // Add a Default USER Role to all users
-
-            foreach (var role in model.Roles)
-            {
-                await _userManager.AddToRoleAsync(newUser, role);
-            }
-
 
             return new ResponseViewModel()
             {
