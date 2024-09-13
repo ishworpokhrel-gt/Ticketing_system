@@ -6863,11 +6863,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Hei.Support\\HEI.Support\\HEI.Support.csproj",
+      "projectUniqueName": "D:\\HEI_JANAK\\Hei.Support\\HEI.Support\\HEI.Support.csproj",
       "projectName": "HEI.Support",
-      "projectPath": "D:\\Hei.Support\\HEI.Support\\HEI.Support.csproj",
+      "projectPath": "D:\\HEI_JANAK\\Hei.Support\\HEI.Support\\HEI.Support.csproj",
       "packagesPath": "C:\\Users\\Janak Bhatt\\.nuget\\packages\\",
-      "outputPath": "D:\\Hei.Support\\HEI.Support\\obj\\",
+      "outputPath": "D:\\HEI_JANAK\\Hei.Support\\HEI.Support\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
