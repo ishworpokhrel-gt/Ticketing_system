@@ -25,8 +25,5 @@ namespace HEI.Support.Areas.Admin.Models
         [Required(ErrorMessage = "Confirm Password is required")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-
-        [Required(ErrorMessage = "Roles are required")]
-        public List<string> Roles { get; set; }
     }
 }

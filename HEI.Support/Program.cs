@@ -4,6 +4,11 @@ using Microsoft.Extensions.Options;
 using System.Net.Mail;
 using System.Net;
 using HEI.Support.Areas.Admin.Models;
+using HEI.Support.Models;
+using HEI.Support.Service.Implementation;
+using HEI.Support.Service.Interface;
+using HEI.Support.Data.Entities;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +18,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
-
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 builder.Services.Configure<SMTPConfig>(builder.Configuration.GetSection("SMTPConfig"));
 builder.Services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<SMTPConfig>>().Value);
 builder.Services.AddSingleton<SmtpClient>(sp =>
@@ -31,7 +38,9 @@ builder.Services.AddSingleton<SmtpClient>(sp =>
     return smtpClient;
 });
 
+builder.Services.AddScoped<IEmailService, EmailService>();
 
+builder.Services.AddScoped<IAccountService, AccountService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
