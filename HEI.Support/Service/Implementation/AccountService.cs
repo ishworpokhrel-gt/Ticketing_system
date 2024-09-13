@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace HEI.Support.Service.Implementation
 {
-    public class AccountService
+    public class AccountService : IAccountService
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -121,14 +121,6 @@ namespace HEI.Support.Service.Implementation
                     Message = errorString
                 };
             }
-
-            // Add a Default USER Role to all users
-
-            foreach (var role in model.Roles)
-            {
-                await _userManager.AddToRoleAsync(newUser, role);
-            }
-
 
             return new ResponseViewModel()
             {
@@ -322,14 +314,6 @@ namespace HEI.Support.Service.Implementation
                     Message = errorString
                 };
             }
-
-            // Add a Default USER Role to all users
-
-            foreach (var role in model.Roles)
-            {
-                await _userManager.AddToRoleAsync(newUser, role);
-            }
-
 
             return new ResponseViewModel()
             {
