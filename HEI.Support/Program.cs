@@ -9,6 +9,7 @@ using HEI.Support.Service.Implementation;
 using HEI.Support.Service.Interface;
 using HEI.Support.Data.Entities;
 using Microsoft.AspNetCore.Identity;
+using HEI.Support.Data.SeedData;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +43,12 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddScoped<IAccountService, AccountService>();
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+	var services = scope.ServiceProvider;
+	var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+	await SeedRoleAndUser.Initialize(services, userManager);  // Ensure this is awaited
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
