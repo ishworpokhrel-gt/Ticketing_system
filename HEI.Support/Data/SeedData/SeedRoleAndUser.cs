@@ -43,12 +43,11 @@ namespace HEI.Support.Data.SeedData
 				{
 					throw new Exception("Failed to create admin user.");
 				}
-			}
-
-			var addToRoleResult = await userManager.AddToRoleAsync(user, "Admin");
-			if (!addToRoleResult.Succeeded)
-			{
-				throw new Exception("Failed to assign admin role to the user.");
+				var addToRoleResult = await userManager.AddToRoleAsync(user, "Admin");
+				if (!addToRoleResult.Succeeded)
+				{
+					throw new Exception("Failed to assign admin role to the user.");
+				}
 			}
 		}
 
