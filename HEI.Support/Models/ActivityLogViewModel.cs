@@ -1,8 +1,9 @@
-﻿namespace HEI.Support.Models
+﻿using HEI.Support.Models.Enum;
+
+namespace HEI.Support.Models
 {
 	public class ActivityLogViewModel
 	{
-		public Guid Id { get; set; }
-		public string Action { get; set; }
-	}
+        public TicketStatus Status { get; set; }
+    }
 }
