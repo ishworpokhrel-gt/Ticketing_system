@@ -1,0 +1,20 @@
+﻿@{
+    Layout = "_AuthLayout";
+}
+<link rel="stylesheet" href="/css/main.css">
+
+@model bool
+
+@{
+    if (Model)
+    {
+        <h1>Thank you for confirming your email.</h1>
+        <p>Continue to login page by <a asp-action="Login">clicking here</a></p>
+    }
+    else
+    {
+        <h1 class="text-danger">Error confirming your email.</h1>
+        <p>Continue to registration page by <a asp-action="Register">clicking here</a></p>
+
+    }
+}

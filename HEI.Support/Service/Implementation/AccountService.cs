@@ -13,315 +13,183 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 
 namespace HEI.Support.Service.Implementation
 {
     public class AccountService : IAccountService
-    {
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IConfiguration _configuration;
-        private readonly ILogger<AccountService> _logger;
-        private readonly IEmailService _emailService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly LinkGenerator _linkGenerator;
+	{
+		private readonly SignInManager<ApplicationUser> _signInManager;
+		private readonly UserManager<ApplicationUser> _userManager;
+		private readonly ILogger<LoginViewModel> _logger;
+		private readonly IEmailService _emailSender;
+		private LinkGenerator _linkGenerator;
+		private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AccountService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, ILogger<AccountService> logger, SignInManager<ApplicationUser> signInManager, IEmailService emailService, IHttpContextAccessor httpContextAccessor, LinkGenerator linkGenerator)
+
+		public AccountService(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IEmailService emailSender, ILogger<LoginViewModel> logger, LinkGenerator linkGenerator, IHttpContextAccessor httpContextAccessor)
+		{
+			_signInManager = signInManager;
+			_userManager = userManager;
+			_logger = logger;
+			_emailSender = emailSender;
+			_linkGenerator = linkGenerator;
+			_httpContextAccessor = httpContextAccessor;
+		}
+
+        public async Task<(int status, string message)> AuthenticateUser(LoginViewModel login)
         {
-            _userManager = userManager;
-            _roleManager = roleManager;
-            _configuration = configuration;
-            _logger = logger;
-            _signInManager = signInManager;
-            _emailService = emailService;
-            _httpContextAccessor = httpContextAccessor;
-            _linkGenerator = linkGenerator;
-        }
+            var user = await _signInManager.UserManager.FindByNameAsync(login.UserName);
 
+            // Attempt to sign in the user
+            var result = await _signInManager.PasswordSignInAsync(login.UserName, login.Password, login.RememberMe, lockoutOnFailure: true);
 
-
-        public async Task<ResponseViewModel> LoginAsync(LoginViewModel loginModel)
-        {
-            var user = await _userManager.FindByNameAsync(loginModel.UserName);
-
-            if (user is null)
-                return new ResponseViewModel()
-                {
-                    IsSucceed = false,
-                    Message = "Invalid Credentials"
-                };
-
-            var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, loginModel.Password);
-
-            if (!isPasswordCorrect)
-                return new ResponseViewModel()
-                {
-                    IsSucceed = false,
-                    Message = "Invalid Credentials"
-                };
-
-            var userRoles = await _userManager.GetRolesAsync(user);
-
-            var authClaims = new List<Claim>
+            if (result.Succeeded)
             {
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim("JWTID", Guid.NewGuid().ToString()),
-                new Claim("FirstName", user.FirstName),
-                new Claim("LastName", user.LastName),
-            };
+                _logger.LogInformation("User logged in.");
 
-            foreach (var userRole in userRoles)
-            {
-                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                // Update last login time
+                user.LastLoginTime = DateTime.UtcNow;
+                await _signInManager.UserManager.UpdateAsync(user);
+
+                return (1, "success");
             }
 
-            var token = GenerateNewJsonWebToken(authClaims);
-
-            return new ResponseViewModel()
+            if (user != null)
             {
-                IsSucceed = true,
-                Message = "Login Successful."
-            };
-        }
-        public async Task<ResponseViewModel> RegisterAsync(RegisterViewModel model)
-        {
-            var isExistsUser = await _userManager.FindByNameAsync(model.UserName);
-
-            if (isExistsUser != null)
-                return new ResponseViewModel()
+                if (!user.EmailConfirmed)
                 {
-                    IsSucceed = false,
-                    Message = "UserName Already Exists"
-                };
-
-
-            ApplicationUser newUser = new ApplicationUser()
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Email = model.Email,
-                UserName = model.UserName,
-                SecurityStamp = Guid.NewGuid().ToString(),
-            };
-
-            var createUserResult = await _userManager.CreateAsync(newUser, model.Password);
-
-            if (!createUserResult.Succeeded)
-            {
-                var errorString = "User Creation Failed Beacause: ";
-                foreach (var error in createUserResult.Errors)
-                {
-                    errorString += " # " + error.Description;
+                    return (2, "Email is not verified.");
                 }
-                return new ResponseViewModel()
+
+                if (result.IsLockedOut)
                 {
-                    IsSucceed = false,
-                    Message = errorString
-                };
+                    _logger.LogWarning("User account locked out.");
+                    return (3, "Account is locked out.");
+                }
+
+                // Handle invalid login attempt
+                var failedAttempts = await _signInManager.UserManager.GetAccessFailedCountAsync(user);
+                int maxAttempt = _signInManager.UserManager.Options.Lockout.MaxFailedAccessAttempts;
+                int remainingAttempts = maxAttempt - failedAttempts;
+
+                return (4, $"Invalid login attempt. Total remaining attempts: {remainingAttempts}");
             }
 
-            return new ResponseViewModel()
-            {
-                IsSucceed = true,
-                Message = "User Created Successfully"
-            };
+            return (-1, "Invalid username or password.");
         }
-        public async Task<ResponseViewModel> ForgotPasswordAsync(ForgetPasswordViewModel model)
+
+
+        public async Task<(int status, string message)> RegisterUser(RegisterViewModel userData)
         {
-            try
+            var user = new ApplicationUser
             {
-                ResponseViewModel response = new ResponseViewModel { };
-                string protocol = _httpContextAccessor.HttpContext.Request.Scheme;
-                HostString host = _httpContextAccessor.HttpContext.Request.Host;
+                UserName = userData.Email,
+                Email = userData.Email,
+                RegistrationDate = DateTime.UtcNow,
+                LastLoginTime = null,
+                LastLogoutTime = null  // Optional, initialize to null
+            };
 
+            var result = await _userManager.CreateAsync(user, userData.Password);
 
-                var user = await _userManager.FindByNameAsync(model.UserName);
-                if (user != null)
+            if (result.Succeeded)
+            {
+                _logger.LogInformation("User created a new account with password.");
+
+                // Assign default role
+                var role = "EndUser";
+                var roleResult = await _userManager.AddToRoleAsync(user, role);
+
+                if (!roleResult.Succeeded)
                 {
-                    if (user.Email != model.Email)
-                    {
-                        var userJson = JsonConvert.SerializeObject(user);
-                        _logger.LogInformation($"UserName do not match with provided Email: {model.Email}. Provided UserName is {userJson}");
-                        // Don't reveal that the user does not exist or is not confirmed
-                        response.IsSucceed = false;
-                        response.Message = "Something went Wrong.";
+                    var errorMessage = string.Join("~", roleResult.Errors.Select(error => error.Description));
+                    return (-1, errorMessage);
+                }
 
-                    }
-                    else
-                    {
-                        var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                // Send email confirmation
+                var userId = await _userManager.GetUserIdAsync(user);
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-                        var url = _linkGenerator.GetPathByAction("ResetPassword", "Account", new { code });
-                        var completeUrl = $"{protocol}://{host}{url}";
-                        await _emailService.SendMailAsync(
-                            model.Email,
-                            "Reset Password",
-                            $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(completeUrl)}'>clicking here</a>.");
-                        response.IsSucceed = true;
-                        response.Message = "Password Reset Mail Send Succesfully.";
-                    }
+                var protocol = _httpContextAccessor.HttpContext.Request.Scheme;
+                var host = _httpContextAccessor.HttpContext.Request.Host;
+
+                var routeValues = new
+                {
+                    userId = userId,
+                    code = code
+                };
+
+                var url = _linkGenerator.GetPathByAction("ConfirmEmail", "Account", values: routeValues);
+                var completeUrl = $"{protocol}://{host}{url}";
+
+                await _emailSender.SendMailAsync(user.Email, "Confirm your email",
+                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(completeUrl)}'>clicking here</a>.");
+
+                if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                {
+                    return (1, "RegisterConfirmationPage");
                 }
                 else
                 {
-                    _logger.LogWarning("User Has not been Registered.");
-                    response.IsSucceed = false;
-                    response.Message = "User has not been Registered!";
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return (2, "Registration successful.");
                 }
-                return response;
             }
-            catch (Exception ex)
+            else
             {
-                _logger.LogError(ex.StackTrace);
-                return (new ResponseViewModel
-                {
-                    IsSucceed = false,
-                    Message = "Something went Worng " + ex.Message
-                });
+                var errorMessage = string.Join("~", result.Errors.Select(error => error.Description));
+                return (-1, errorMessage);
             }
-
-        }
-        public async Task<ResponseViewModel> ResetPasswordAsync(ResetPasswordViewModel resetPassword)
-        {
-            try
-            {
-                ResponseViewModel response = new ResponseViewModel { };
-                var user = await _userManager.FindByNameAsync(resetPassword.UserName);
-                if (user == null)
-                {
-                    _logger.LogInformation($"UserName is not registered {resetPassword.UserName}");
-                    response.Message = "Something went Wrong";
-                    response.IsSucceed = false;
-                }
-                else
-                {
-                    var result = await _userManager.ResetPasswordAsync(user, Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(resetPassword.Code)), resetPassword.Password);
-                    if (result.Succeeded)
-                    {
-                        response.Message = "Password Reset Successfully.";
-                        response.IsSucceed = true;
-                    }
-                    else
-                    {
-                        response.Message = "Something went Wrong.";
-                        response.IsSucceed = false;
-                    }
-                }
-                return response;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.StackTrace);
-                return new ResponseViewModel
-                {
-                    IsSucceed = false,
-                    Message = "Something went Worng. " + ex.Message
-
-                };
-            }
-        }
-        public async Task<ResponseViewModel> ChangePasswordAsync(ChangePasswordViewModel changePassword, ApplicationUser user)
-        {
-            try
-            {
-                ResponseViewModel response = new ResponseViewModel { };
-                if (user == null)
-                {
-                    response.Message = "Unable to load user with ID.";
-                    response.IsSucceed = false;
-                }
-                else
-                {
-                    var changePasswordResult = await _userManager.ChangePasswordAsync(user, changePassword.CurrentPassword, changePassword.NewPassword);
-                    if (!changePasswordResult.Succeeded)
-                    {
-                        response.Message = "Something went Wrong.";
-                        response.IsSucceed = false;
-                        return response;
-                    }
-                    await _signInManager.RefreshSignInAsync(user);
-                    _logger.LogInformation("User changed their password successfully.");
-                    await _signInManager.SignOutAsync();
-                    response.Message = "Password Changed Successfully.";
-                    response.IsSucceed = true;
-                }
-                return response;
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.StackTrace);
-                return new ResponseViewModel
-                {
-                    IsSucceed = false,
-                    Message = "Something went Worng. " + ex.Message
-                };
-            }
-        }
-        private string GenerateNewJsonWebToken(List<Claim> claims)
-        {
-            var authSecret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
-
-            var tokenObject = new JwtSecurityToken(
-                    issuer: _configuration["JWT:ValidIssuer"],
-                    audience: _configuration["JWT:ValidAudience"],
-                    expires: DateTime.Now.AddHours(1),
-                    claims: claims,
-                    signingCredentials: new SigningCredentials(authSecret, SecurityAlgorithms.HmacSha256)
-                );
-
-            string token = new JwtSecurityTokenHandler().WriteToken(tokenObject);
-
-            return token;
         }
 
 
-        public async Task<ResponseViewModel> RegisterEmployeeAsync(RegisterViewModel model)
-        {
-            var isExistsUser = await _userManager.FindByNameAsync(model.UserName);
+        public async Task<(int status, string message)> HandleForgotPassword(string Email)
+		{
+			var protocol = _httpContextAccessor.HttpContext.Request.Scheme;
+			var host = _httpContextAccessor.HttpContext.Request.Host;
 
-            if (isExistsUser != null)
-                return new ResponseViewModel()
-                {
-                    IsSucceed = false,
-                    Message = "UserName Already Exists"
-                };
+			var user = await _userManager.FindByEmailAsync(Email);
+			if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+			{
+				// Don't reveal that the user does not exist or is not confirmed
+				return (-1, "ForgotPasswordConfirmation");
+			}
 
+			var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+			code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-            ApplicationUser newUser = new ApplicationUser()
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Email = model.Email,
-                UserName = model.UserName,
-                SecurityStamp = Guid.NewGuid().ToString(),
-            };
+			var url = _linkGenerator.GetPathByAction("ResetPassword", "Account", new { code });
+			var completeUrl = $"{protocol}://{host}{url}";
+			await _emailSender.SendMailAsync(
+				Email,
+				"Reset Password",
+				$"Please reset your password by <a href='{HtmlEncoder.Default.Encode(completeUrl)}'>clicking here</a>.");
+			return (1, "success");
+		}
 
-            var createUserResult = await _userManager.CreateAsync(newUser);
+		public async Task<(int status, string message)> HandleChangePassword(ChangePasswordViewModel ChangePasswordViewModel, ApplicationUser user)
+		{
+			if (user == null)
+			{
+				return (0, "Unable to load user with ID.");
+			}
+			var changePasswordResult = await _userManager.ChangePasswordAsync(user, ChangePasswordViewModel.CurrentPassword, ChangePasswordViewModel.NewPassword);
+			if (!changePasswordResult.Succeeded)
+			{
+				var errorMessage = String.Empty;
+				foreach (var error in changePasswordResult.Errors)
+				{
+					errorMessage = errorMessage + '~' + error.Description;
+				}
+				return (-1, errorMessage);
+			}
 
-            if (!createUserResult.Succeeded)
-            {
-                var errorString = "User Creation Failed Beacause: ";
-                foreach (var error in createUserResult.Errors)
-                {
-                    errorString += " # " + error.Description;
-                }
-                return new ResponseViewModel()
-                {
-                    IsSucceed = false,
-                    Message = errorString
-                };
-            }
-
-            return new ResponseViewModel()
-            {
-                IsSucceed = true,
-                Message = "User Created Successfully"
-            };
-        }
-
-
-    }
+			await _signInManager.RefreshSignInAsync(user);
+			_logger.LogInformation("User changed their password successfully.");
+			await _signInManager.SignOutAsync();
+			return (1, "success");
+		}
+	}
 }
