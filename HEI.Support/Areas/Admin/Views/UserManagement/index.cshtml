@@ -1,0 +1,65 @@
+﻿@model List<UserViewModel>
+
+<h2>User List</h2>
+<a class="btn btn-primary" asp-action="RegisterUser"> Create User</a>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Roles</th>
+            <th>Locked Out</th>
+            <th>Registration Date</th>
+            <th>Last Login</th>
+            <th>Last Logout</th>
+            <th>Failed Login Attempts</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>@user.UserName</td>
+                <td>
+                    @if (user.Roles.Any())
+                    {
+                        <ul>
+                            @foreach (var role in user.Roles)
+                            {
+                                <li>@role</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <span>No roles assigned</span>
+                    }
+                </td>
+                <td>@(user.IsLockedOut ? "Yes" : "No")</td>
+                <td>@user.RegistrationDate?.ToString("g")</td>
+                <td>@user.LastLoginTime?.ToString("g")</td>
+                <td>@user.LastLogoutTime?.ToString("g")</td>
+                <td>@user.FailedLoginAttempts</td>
+                <td>
+                    <a asp-action="EditUser" asp-route-id="@user.Id">Edit</a> |
+                    <a asp-action="ChangeRoleUser" asp-route-id="@user.Id">Change Role</a> |
+                    @if (user.IsLockedOut)
+                    {
+                        <a asp-action="Enableuser" asp-route-id="@user.Id">Enable</a>
+                    }
+                    else
+                    {
+                        <a asp-action="DisableUser" asp-route-id="@user.Id">Disable</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,38 @@
+﻿@model ChangeRoleViewModel
+
+<h2>Change User Role</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+
+<form asp-action="ChangeRoleUser" method="post">
+    <h4>@Model.UserId</h4>
+
+    <div class="form-group">
+        <label>Current Roles</label>
+        <ul>
+            @foreach (var role in Model.CurrentRoles)
+            {
+                <li>@role</li>
+            }
+        </ul>
+    </div>
+
+    <div class="form-group">
+        <label>Select Roles</label>
+        @foreach (var role in Model.AllRoles)
+        {
+            <div>
+                <input type="checkbox" name="SelectedRoles" value="@role"
+                @(Model.CurrentRoles.Contains(role) ? "checked" : "") /> @role
+            </div>
+        }
+    </div>
+
+    <input type="hidden" name="UserId" value="@Model.UserId" />
+    <button type="submit" class="btn btn-primary">Update Roles</button>
+</form>
+
+<a asp-action="Index">Back to User List</a>

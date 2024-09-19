@@ -1,0 +1,22 @@
+﻿@model UserViewModel
+
+<h2>User Details</h2>
+
+<div>
+    <h4>Email: @Model.Email</h4>
+    <h4>Username: @Model.UserName</h4>
+    <h4>Roles:</h4>
+    <ul>
+        @foreach (var role in Model.Roles)
+        {
+            <li>@role</li>
+        }
+    </ul>
+    <h4>Locked Out: @(Model.IsLockedOut ? "Yes" : "No")</h4>
+    <h4>Registration Date: @Model.RegistrationDate?.ToString("g")</h4>
+    <h4>Last Login: @Model.LastLoginTime?.ToString("g")</h4>
+    <h4>Last Logout: @Model.LastLogoutTime?.ToString("g")</h4>
+    <h4>Failed Login Attempts: @Model.FailedLoginAttempts</h4>
+</div>
+
+<a asp-action="Index">Back to User List</a>
