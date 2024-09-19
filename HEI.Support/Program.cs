@@ -10,6 +10,8 @@ using HEI.Support.Service.Interface;
 using HEI.Support.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using HEI.Support.Data.SeedData;
+using HEI.Support.Repository.Interface;
+using HEI.Support.Repository.Implementation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,10 +61,20 @@ builder.Services.AddSingleton<SmtpClient>(sp =>
     return smtpClient;
 });
 
+builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+builder.Services.AddScoped<IAttachmentFileRepository, AttachmentFileRepository>();
+builder.Services.AddScoped<IActivityLogRepository, ActivityLogRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+
+
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IUserManagementService, UserManagementService>();
 
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<ITicketService, TicketService>();
+
+
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {

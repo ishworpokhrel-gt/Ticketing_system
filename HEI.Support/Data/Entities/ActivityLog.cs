@@ -2,8 +2,7 @@
 {
 	public class ActivityLog : BaseDbEntity
 	{
-		public string Action { get; set; }  // e.g., "Created", "Updated", "Closed","Resolved"
-		public DateTime ActionDate { get; set; }
+		public string Status { get; set; }  // e.g., "Open", "InProgress", "Completed", "Closed"
 		public Guid TicketId { get; set; }
 		public Ticket Ticket { get; set; }
 	}

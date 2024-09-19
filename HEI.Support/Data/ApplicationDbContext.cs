@@ -11,28 +11,10 @@ namespace HEI.Support.Data
         {
             
         }
-		//protected override void OnModelCreating(ModelBuilder modelBuilder)
-		//{
-		//	base.OnModelCreating(modelBuilder);
+		public DbSet<ActivityLog> ActivityLogs { get; set; }
+        public DbSet<AttachmentFile> AttachmentFiles { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
 
-		//	// Customize the ASP.NET Core Identity model and override the defaults if needed.
-		//	// For example, changing the table names:
-		//	modelBuilder.Entity<ApplicationUser>(entity =>
-		//	{
-		//		entity.ToTable(name: "Users");
-		//	});
-
-		//	modelBuilder.Entity<IdentityRole>(entity =>
-		//	{
-		//		entity.ToTable(name: "Roles");
-		//	});
-
-		//	modelBuilder.Entity<IdentityUserRole<string>>(entity =>
-		//	{
-		//		entity.ToTable("UserRoles");
-		//	});
-
-		//	// Add more configurations here if needed
-		//}
 	}
 }
