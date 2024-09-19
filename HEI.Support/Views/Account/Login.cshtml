@@ -5,7 +5,7 @@
     Layout = "_AuthLayout";
 }
 <div class="w-lg-500px p-10">
-	<form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" asp-action="Login" method="post">
+	<form class="form w-100" novalidate="novalidate" asp-action="Login" method="post">
 		<div class="text-center mb-11">
 			<h1 class="text-dark fw-bolder mb-3">Sign In</h1>
 		</div>
@@ -31,8 +31,3 @@
 		</div>
 	</form>
 </div>
-@section Scripts {
-	@{
-		await Html.RenderPartialAsync("_ValidationScriptsPartial");
-	}
-}

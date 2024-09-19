@@ -4,7 +4,8 @@
 	{
 		Open,
 		InProgress,
-		Resolved,
+		Completed,
 		Closed
 	}
+
 }
