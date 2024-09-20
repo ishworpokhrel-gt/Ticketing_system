@@ -1,0 +1,69 @@
+﻿@model IEnumerable<TicketViewModel>
+
+@{
+    ViewData["Title"] = "Tickets List";
+}
+
+<h1>Tickets</h1>
+
+<p>
+    <a class="btn btn-primary" asp-controller="Ticket" asp-action="Create">Create New Ticket</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Issue Type</th>
+            <th>Description</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Assignee</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.IssueTypeValue</td>
+                <td>@item.Description</td>
+                <td>@item.PriorityValue</td>
+                <td>@item.StatusValue</td>
+@*                 <td id="assignee-@item.Id">@item.AssigneeName</td> <!-- Display Assignee's Name -->
+ *@
+                 <td></td>
+                <td>
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#assignToModal-@item.Id">Assign To</button> |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modals for assigning the ticket -->
+@foreach (var item in Model)
+{
+    <div class="modal fade" id="assignToModal-@item.Id" tabindex="-1" aria-labelledby="assignToModalLabel-@item.Id" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="assignToModalLabel-@item.Id">Assign Ticket to IT Support Member</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group">
+                        <!-- Example of IT support members. Replace with dynamic data -->
+                        <a href="@Url.Action("AssignTo", "Ticket", new { id = item.Id, memberId = 1 })" class="list-group-item list-group-item-action">John Doe</a>
+                        <a href="@Url.Action("AssignTo", "Ticket", new { id = item.Id, memberId = 2 })" class="list-group-item list-group-item-action">Jane Smith</a>
+                        <a href="@Url.Action("AssignTo", "Ticket", new { id = item.Id, memberId = 3 })" class="list-group-item list-group-item-action">Michael Johnson</a>
+                        <a href="@Url.Action("AssignTo", "Ticket", new { id = item.Id, memberId = 4 })" class="list-group-item list-group-item-action">Emily Davis</a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
