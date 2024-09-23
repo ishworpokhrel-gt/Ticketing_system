@@ -40,7 +40,14 @@ namespace HEI.Support.WebApp.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                model.AvailableRoles = (await _userManagementService.GetAllRolesAsync())
+            .Select(role => new SelectListItem
+            {
+                Value = role,
+                Text = role
+            }).ToList();
+
+				return View(model);
             }
 
             (bool status, string message) = await _userManagementService.RegisterUserAsync(model);
