@@ -4,6 +4,6 @@ namespace HEI.Support.Common.Models
 {
 	public class ActivityLogViewModel
 	{
-        public TicketStatus Status { get; set; }
+        public int Status { get; set; }
     }
 }
