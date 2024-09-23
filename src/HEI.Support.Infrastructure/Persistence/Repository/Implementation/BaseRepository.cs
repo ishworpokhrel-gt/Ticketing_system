@@ -8,7 +8,7 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
         public readonly ApplicationDbContext _dbContext;
-        public BaseRepository(ApplicationDbContext dbContext)
+        public BaseRepository(ApplicationDbContext dbContext) 
         {
             _dbContext = dbContext;
         }
@@ -20,6 +20,14 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task AddMultipleEntity<TEntity>(IEnumerable<TEntity> entityList) where TEntity : class
+        {
+
+            if (entityList == null) throw new ArgumentNullException("Entity");
+
+            await _dbContext.Set<TEntity>().AddRangeAsync(entityList);
+            await _dbContext.SaveChangesAsync();
+        }
         public async Task DeleteAsync(string Id, ApplicationUser user)
         {
             var entity = await _dbContext.Set<T>().FindAsync(Id);
@@ -36,7 +44,7 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
             }
         }
 
-        public async Task<T> GetAsync(string id)
+        public async Task<T> GetAsync(Guid id)
         {
             return await _dbContext.Set<T>().FindAsync(id);
         }

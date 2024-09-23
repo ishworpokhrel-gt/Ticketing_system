@@ -14,6 +14,18 @@
 
 			<div class="row g-9 mb-8">
 				<div class="col-md-6 fv-row">
+					<label asp-for="FullName" class="required fs-6 fw-semibold mb-2"></label>
+					<input asp-for="FullName" class="form-select form-select-solid" placeholder="Full Name" />
+					<span asp-validation-for="FullName" class="text-danger"></span>
+				</div>
+				<div class="col-md-6 fv-row">
+					<label asp-for="Phone" class="required fs-6 fw-semibold mb-2"></label>
+					<input asp-for="Phone" class="form-select form-select-solid" />
+					<span asp-validation-for="Phone" class="text-danger"></span>
+				</div>
+			</div>
+			<div class="row g-9 mb-8">
+				<div class="col-md-6 fv-row">
 					<label asp-for="IssueType" class="required fs-6 fw-semibold mb-2"></label>
 					<select asp-for="IssueType" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Select a Issue Type" asp-items="ViewBag.IssueTypes"></select>
 					<span asp-validation-for="IssueType" class="text-danger"></span>
