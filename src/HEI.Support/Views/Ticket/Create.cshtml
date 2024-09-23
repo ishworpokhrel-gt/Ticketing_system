@@ -1,55 +1,67 @@
 ﻿@model TicketViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Ticket";
+    ViewData["BreadCrum"] = "Create Ticket";
 }
+<div class="card">
+	<div class="card-header p-lg-5">
+		<h1>Create Ticket</h1>
+	</div>
+	<div class="card-body p-lg-17">
+		<form asp-action="Create" class="form" method="post">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-<h1>Create</h1>
-
-<h4>TicketViewModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="form-group">
-                <label asp-for="FullName" class="control-label"></label>
-                <input asp-for="FullName" class="form-control" ></input>
-                <span asp-validation-for="FullName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" rows="4"></input>
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IssueType" class="control-label"></label>
-                <select asp-for="IssueType" class="form-control" asp-items="ViewBag.IssueTypes"></select>
-                <span asp-validation-for="IssueType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Priority" class="control-label"></label>
-                <select asp-for="Priority" class="form-control" asp-items="ViewBag.Priority"></select>
-                <span asp-validation-for="Priority" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+			<div class="row g-9 mb-8">
+				<div class="col-md-6 fv-row">
+					<label asp-for="FullName" class="required fs-6 fw-semibold mb-2"></label>
+					<input asp-for="FullName" class="form-select form-select-solid" placeholder="Full Name" />
+					<span asp-validation-for="FullName" class="text-danger"></span>
+				</div>
+				<div class="col-md-6 fv-row">
+					<label asp-for="Phone" class="required fs-6 fw-semibold mb-2"></label>
+					<input asp-for="Phone" class="form-select form-select-solid" />
+					<span asp-validation-for="Phone" class="text-danger"></span>
+				</div>
+			</div>
+			<div class="row g-9 mb-8">
+				<div class="col-md-6 fv-row">
+					<label asp-for="IssueType" class="required fs-6 fw-semibold mb-2"></label>
+					<select asp-for="IssueType" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Select a Issue Type" asp-items="ViewBag.IssueTypes"></select>
+					<span asp-validation-for="IssueType" class="text-danger"></span>
+				</div>
+				<div class="col-md-6 fv-row">
+					<label asp-for="Priority" class="required fs-6 fw-semibold mb-2"></label>
+					<select asp-for="Priority" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Select Priority" asp-items="ViewBag.Priority"></select>
+					<span asp-validation-for="Priority" class="text-danger"></span>
+				</div>
+			</div>
+			<div class="d-flex flex-column mb-8 fv-row">
+				<label asp-for="Description" class="fs-6 fw-semibold mb-2"></label>
+				<textarea asp-for="Description" class="form-control form-control-solid" rows="4" placeholder="Type your ticket description"></textarea>
+				<span asp-validation-for="Description" class="text-danger"></span>
+			</div>
+			<div class="fv-row mb-8">
+				<label class="fs-6 fw-semibold mb-2">Attachments</label>
+				<div class="dropzone" id="kt_modal_create_ticket_attachments">
+					<div class="dz-message needsclick align-items-center">
+						<i class="ki-duotone ki-file-up fs-3hx text-primary">
+							<span class="path1"></span>
+							<span class="path2"></span>
+						</i>
+						<div class="ms-4">
+							<h3 class="fs-5 fw-bold text-gray-900 mb-1">Drop files here or click to upload.</h3>
+							<span class="fw-semibold fs-7 text-gray-400">Upload up to 10 files</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="text-center">
+				<a asp-action="Index" type="reset" id="kt_modal_new_ticket_cancel" class="btn btn-light me-3">Cancel</a>
+				<button type="submit" id="kt_modal_new_ticket_submit" class="btn btn-primary">
+					<span class="indicator-label">Submit</span>
+				</button>
+			</div>
+		</form>
+	</div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
