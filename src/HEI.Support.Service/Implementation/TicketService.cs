@@ -4,6 +4,10 @@ using HEI.Support.Domain.Entities;
 using HEI.Support.Infrastructure.Persistence;
 using HEI.Support.Infrastructure.Persistence.Repository.Interface;
 using HEI.Support.Service.Interface;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
+using System.Net.Mail;
 
 namespace HEI.Support.Service.Implementation
 {
@@ -13,14 +17,16 @@ namespace HEI.Support.Service.Implementation
 		private readonly IAttachmentFileRepository _attachmentFileRepository;
 		private readonly IActivityLogRepository _activityLogRepository;
 		private readonly ApplicationDbContext _context;
+        private IWebHostEnvironment _webHostEnvironment;
 
         public TicketService(ITicketRepository ticketRepository, IAttachmentFileRepository attachmentFileRepository,
-            IActivityLogRepository activityLogRepository, ApplicationDbContext context)
+            IActivityLogRepository activityLogRepository, ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _ticketRepository = ticketRepository;
             _attachmentFileRepository = attachmentFileRepository;
             _activityLogRepository = activityLogRepository;
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
 
@@ -46,29 +52,22 @@ namespace HEI.Support.Service.Implementation
                     var activityLog = new ActivityLog
                     {
                         TicketId = ticket.Id,
-                        Status = TicketStatus.Open.ToString(),
+                        Status = ticket.Status,
                         CreatedDate = DateTime.UtcNow,
                         CreatedBy = user.Id
                     };
                     await _activityLogRepository.AddAsync(activityLog);
+                    var attachedFiles = await UploadImageAsync(model.Attachment);
 
-                    // Handle attachments if present
-                    if (model.Attachments != null && model.Attachments.Any())
+                    var userUploadItems = attachedFiles.Select(uploadedFileName => new AttachmentFile()
                     {
-                        foreach (var attachment in model.Attachments)
-                        {
-                            var attachmentFile = new AttachmentFile
-                            {
-                                TicketID = ticket.Id,
-                                FileName = attachment.FileName,
-                                FilePath = attachment.FilePath,
-                                CreatedDate = DateTime.UtcNow,
-                                CreatedBy = user.Id
-                            };
+                        TicketID = ticket.Id,
+                        FileUrl = uploadedFileName,
+                        CreatedDate = DateTime.UtcNow,
+                        CreatedBy = user.Id
+                    }).ToList();
+                   await _attachmentFileRepository.AddMultipleEntity(userUploadItems);
 
-                            await _attachmentFileRepository.AddAsync(attachmentFile);
-                        }
-                    }
                     await transaction.CommitAsync();
                 }
                 catch (Exception ex)
@@ -93,9 +92,62 @@ namespace HEI.Support.Service.Implementation
 
             return ticketViewModels;
         }
-        public Task<TicketViewModel> GetTicketByIdAsync(Guid ticketId)
+
+        public async Task <List<string>> UploadImageAsync(List<IFormFile> files)
         {
-            throw new NotImplementedException();
+            var uniqueFileName = new List<string>();
+            var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "Ticket");
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+            foreach (var item in files)
+            {
+                var renamedFileName = $"{DateTime.Now.Year}{DateTime.Now.Month}{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}{DateTime.Now.Second}{DateTime.Now.Millisecond}";
+
+                var fileName = $"{renamedFileName}{Path.GetExtension(item.FileName)}";
+
+                await using var stream = new FileStream(Path.Combine(folderPath, fileName), FileMode.Create);
+
+                await item.CopyToAsync(stream);
+
+                uniqueFileName.Add(Path.Combine("Ticket", fileName));
+            }
+            return uniqueFileName;
+        }
+        public async Task<TicketViewModel> GetTicketByIdAsync(Guid ticketId)
+
+        {
+            var ticket = await _ticketRepository.GetAsync(ticketId);
+            if (ticket == null)
+            {
+                throw new KeyNotFoundException($"Ticket with Id {ticketId} not found.");
+            }
+
+            var result = new TicketViewModel
+            {
+                Id = ticket.Id,
+                IssueType = ticket.IssueTypeId, 
+                Description = ticket.Description,
+                Priority = ticket.Priority,
+                Status = ticket.Status,
+                Attachments = ticket.Attachments?.Select(a => new AttachmentFileViewModel
+                {
+                    FilePath = a.FileUrl
+                    
+                }).ToList(),
+                Comments = ticket.Comments?.Select(c => new CommentViewModel
+                {
+                   Content = c.Content,
+                }).ToList(),
+                ActivityLogs = ticket.ActivityLogs?.Select(l => new ActivityLogViewModel
+                {
+                   Status = ticket.Status
+                }).ToList()
+            };
+
+            return result;
+
         }
 
         public Task<IEnumerable<TicketViewModel>> GetTicketsBySupportUserIdAsync(string supportUserId)

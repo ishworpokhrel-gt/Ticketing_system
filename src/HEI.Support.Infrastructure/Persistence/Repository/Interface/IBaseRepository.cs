@@ -6,12 +6,13 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Interface
     {
         Task AddAsync(T entity);
 
-        Task<T> GetAsync(string id);
+        Task<T> GetAsync(Guid id);
 
         Task UpdateAsync(T entity);
 
         Task DeleteAsync(string id, ApplicationUser user);
 
         Task<List<T>> GetAllAsync();
+        Task AddMultipleEntity<TEntity>(IEnumerable<TEntity> entityList) where TEntity : class;
     }
 }
