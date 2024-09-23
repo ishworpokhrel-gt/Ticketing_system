@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HEI.Support.Common\HEI.Support.Common.csproj" />
+    <ProjectReference Include="..\HEI.Support.Domain\HEI.Support.Domain.csproj" />
+    <ProjectReference Include="..\HEI.Support.Infrastructure\HEI.Support.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
