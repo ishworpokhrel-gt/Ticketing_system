@@ -14,6 +14,8 @@ namespace HEI.Support.Common.Models
         public string FullName { get; set; }
         public string Phone { get; set; }
         public int Status { get; set; }
+        public string? CreatedBy { get; set; }
+        public string? AsignTo { get; set; }
         public List<IFormFile>? Attachment { get; set; }
 
         public List<CommentViewModel>? Comments { get; set; } = new List<CommentViewModel>();
