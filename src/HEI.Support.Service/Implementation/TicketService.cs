@@ -6,8 +6,10 @@ using HEI.Support.Infrastructure.Persistence.Repository.Interface;
 using HEI.Support.Service.Interface;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Hosting;
 using System.Net.Mail;
+using System.Net.Sockets;
 
 namespace HEI.Support.Service.Implementation
 {
@@ -18,15 +20,19 @@ namespace HEI.Support.Service.Implementation
 		private readonly IActivityLogRepository _activityLogRepository;
 		private readonly ApplicationDbContext _context;
         private IWebHostEnvironment _webHostEnvironment;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public TicketService(ITicketRepository ticketRepository, IAttachmentFileRepository attachmentFileRepository,
-            IActivityLogRepository activityLogRepository, ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
+            IActivityLogRepository activityLogRepository, ApplicationDbContext context, IWebHostEnvironment webHostEnvironment, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
             _ticketRepository = ticketRepository;
             _attachmentFileRepository = attachmentFileRepository;
             _activityLogRepository = activityLogRepository;
             _context = context;
             _webHostEnvironment = webHostEnvironment;
+            _roleManager = roleManager;
+            _userManager = userManager;
         }
 
 
@@ -43,6 +49,8 @@ namespace HEI.Support.Service.Implementation
                         IssueTypeId = model.IssueType,
                         Description = model.Description,
                         Priority = model.Priority,
+                        FullName = model.FullName,
+                        Phone = model.Phone,
                         CreatedDate = DateTime.UtcNow,
                         CreatedBy = user.Id
                     };
@@ -52,22 +60,27 @@ namespace HEI.Support.Service.Implementation
                     var activityLog = new ActivityLog
                     {
                         TicketId = ticket.Id,
+                        UserId = user.Id,
                         Status = ticket.Status,
                         CreatedDate = DateTime.UtcNow,
                         CreatedBy = user.Id
                     };
                     await _activityLogRepository.AddAsync(activityLog);
-                    var attachedFiles = await UploadImageAsync(model.Attachment);
-
-                    var userUploadItems = attachedFiles.Select(uploadedFileName => new AttachmentFile()
+                    if (model.Attachment is not null)
                     {
-                        TicketID = ticket.Id,
-                        FileUrl = uploadedFileName,
-                        CreatedDate = DateTime.UtcNow,
-                        CreatedBy = user.Id
-                    }).ToList();
-                   await _attachmentFileRepository.AddMultipleEntity(userUploadItems);
+                        var attachedFiles = await UploadImageAsync(model.Attachment);
 
+
+
+                        var userUploadItems = attachedFiles.Select(uploadedFileName => new AttachmentFile()
+                        {
+                            TicketID = ticket.Id,
+                            FileUrl = uploadedFileName,
+                            CreatedDate = DateTime.UtcNow,
+                            CreatedBy = user.Id
+                        }).ToList();
+                        await _attachmentFileRepository.AddMultipleEntity(userUploadItems);
+                    }
                     await transaction.CommitAsync();
                 }
                 catch (Exception ex)
@@ -80,17 +93,8 @@ namespace HEI.Support.Service.Implementation
 
         public async Task<List<TicketViewModel>> GetAllTicketsAsync()
         {
-            var data = await _ticketRepository.GetAllAsync();
-
-            var ticketViewModels = data.Select(ticket => new TicketViewModel
-            {
-                IssueType = ticket.IssueTypeId,
-                Description = ticket.Description,
-                Priority = ticket.Priority,
-                Status = ticket.Status,
-            }).ToList();
-
-            return ticketViewModels;
+            var data = await _ticketRepository.GetAllTicketsAsync();
+            return data;
         }
 
         public async Task <List<string>> UploadImageAsync(List<IFormFile> files)
@@ -149,6 +153,60 @@ namespace HEI.Support.Service.Implementation
             return result;
 
         }
+
+        public async Task<List<UserViewModel>> GetUsersByRoleAsync(string roleName)
+        {
+            // Check if the role exists
+            var role = await _roleManager.FindByNameAsync(roleName);
+            if (role == null)
+            {
+                throw new KeyNotFoundException($"Role '{roleName}' not found.");
+            }
+
+            var usersInRole = await _userManager.GetUsersInRoleAsync(roleName);
+            var result = new List<UserViewModel>();
+            foreach (var user in usersInRole)
+            {
+                var userViewModel = new UserViewModel
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    IsLockedOut = await _userManager.IsLockedOutAsync(user),
+                    RegistrationDate = user.LockoutEnd,
+                    Roles = (await _userManager.GetRolesAsync(user)).ToList(),
+                    FailedLoginAttempts = user.AccessFailedCount,
+                    LastLoginTime = user.LastLoginTime,
+                    LastLogoutTime = user.LastLogoutTime
+                };
+                result.Add(userViewModel);
+            }
+
+            return result;
+        }
+
+
+        public async Task AssignTicketAsync(Guid ticketId, string assigneeId, ApplicationUser user)
+        {
+            var ticket = await _ticketRepository.GetAsync(ticketId);
+
+            if (ticket == null)
+            {
+                throw new KeyNotFoundException("Ticket not found.");
+            }
+            ticket.Status = (int)TicketStatus.InProgress;
+            await _ticketRepository.UpdateAsync(ticket);
+            var assignee = new ActivityLog
+            {
+                TicketId=ticketId,
+                UserId = assigneeId,
+                Status = (int)TicketStatus.InProgress,
+                CreatedBy = user.Id,
+                CreatedDate = DateTime.UtcNow
+            };
+            await _activityLogRepository.AddAsync(assignee); // Update the ticket in the database
+        }
+
 
         public Task<IEnumerable<TicketViewModel>> GetTicketsBySupportUserIdAsync(string supportUserId)
         {
