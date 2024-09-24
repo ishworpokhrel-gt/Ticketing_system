@@ -43,6 +43,8 @@ namespace HEI.Support.Service.Implementation
                         IssueTypeId = model.IssueType,
                         Description = model.Description,
                         Priority = model.Priority,
+                        FullName = model.FullName,
+                        Phone = model.Phone,
                         CreatedDate = DateTime.UtcNow,
                         CreatedBy = user.Id
                     };
