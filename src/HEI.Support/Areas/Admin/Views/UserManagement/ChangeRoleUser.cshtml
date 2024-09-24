@@ -1,38 +1,55 @@
 ﻿@model ChangeRoleViewModel
 
-<h2>Change User Role</h2>
-
-@if (TempData["Message"] != null)
-{
-    <div class="alert alert-info">@TempData["Message"]</div>
+@{
+    ViewData["Title"] = "Change User Role";
+    ViewData["BreadCrum"] = "Change User Role";
 }
-
-<form asp-action="ChangeRoleUser" method="post">
-    <h4>@Model.UserId</h4>
-
-    <div class="form-group">
-        <label>Current Roles</label>
-        <ul>
-            @foreach (var role in Model.CurrentRoles)
-            {
-                <li>@role</li>
-            }
-        </ul>
+<div class="card">
+    <div class="card-header p-lg-5">
+        <h1>Change User Role</h1>
     </div>
-
-    <div class="form-group">
-        <label>Select Roles</label>
-        @foreach (var role in Model.AllRoles)
+    <div class="card-body p-lg-17">
+        @if (TempData["Message"] != null)
         {
-            <div>
-                <input type="checkbox" name="SelectedRoles" value="@role"
-                @(Model.CurrentRoles.Contains(role) ? "checked" : "") /> @role
-            </div>
+            <div class="alert alert-info">@TempData["Message"]</div>
         }
+
+        <form asp-action="ChangeRoleUser" method="post">
+            <div class="form-group mb-4">
+                <label class="required fs-6 fw-semibold mb-2">Current Roles</label>
+                <ul class="list-unstyled">
+                    @foreach (var role in Model.CurrentRoles)
+                    {
+                        <li>@role</li>
+                    }
+                </ul>
+            </div>
+
+            <div class="form-group mb-4">
+                <label class="required fs-6 fw-semibold mb-2">Select Role</label>
+                @foreach (var role in Model.AllRoles)
+                {
+                    <div class="d-flex fv-row mb-3">
+                        <div class="form-check form-check-custom form-check-solid">
+                            <input class="form-check-input me-3" name="SelectedRole" type="radio" value="@role"
+                            @(Model.CurrentRoles.Contains(role) ? "checked='checked'" : "") id="role_@role" />
+                            <label class="form-check-label" for="role_@role">
+                                <div class="fw-bold text-gray-800">@role</div>
+                                @* <div class="text-gray-600">Description for @role (optional)</div> *@
+                            </label>
+                        </div>
+                    </div>
+                    <div class='separator separator-dashed my-5'></div>
+                }
+            </div>
+
+            <input type="hidden" name="UserId" value="@Model.UserId" />
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">
+                    <span class="indicator-label">Update Roles</span>
+                </button>
+                <a asp-action="Index" class="btn btn-light me-3">Back to User List</a>
+            </div>
+        </form>
     </div>
-
-    <input type="hidden" name="UserId" value="@Model.UserId" />
-    <button type="submit" class="btn btn-primary">Update Roles</button>
-</form>
-
-<a asp-action="Index">Back to User List</a>
+</div>

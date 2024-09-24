@@ -3,15 +3,10 @@
 <h2>User Details</h2>
 
 <div>
+    <h4>FullNmae: @Model.FirstName @Model.LastName</h4>
     <h4>Email: @Model.Email</h4>
     <h4>Username: @Model.UserName</h4>
-    <h4>Roles:</h4>
-    <ul>
-        @foreach (var role in Model.Roles)
-        {
-            <li>@role</li>
-        }
-    </ul>
+    <h4>Roles:@Model.Role</h4>
     <h4>Locked Out: @(Model.IsLockedOut ? "Yes" : "No")</h4>
     <h4>Registration Date: @Model.RegistrationDate?.ToString("g")</h4>
     <h4>Last Login: @Model.LastLoginTime?.ToString("g")</h4>

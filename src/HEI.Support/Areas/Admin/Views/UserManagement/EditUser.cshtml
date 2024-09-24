@@ -1,28 +1,71 @@
 ﻿@model EditUserViewModel
 
-<h2>Edit User</h2>
-
-@if (TempData["Message"] != null)
-{
-    <div class="alert alert-info">@TempData["Message"]</div>
+@{
+    ViewData["Title"] = "Edit User";
+    ViewData["BreadCrum"] = "Edit User";
 }
+<div class="card">
+    <div class="card-header p-lg-5">
+        <h1>Edit User</h1>
+    </div>
+    <div class="card-body p-lg-17">
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-info">@TempData["Message"]</div>
+        }
 
-<form asp-action="EditUser" method="post">
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" readonly />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="UserName"></label>
-        <input asp-for="UserName" class="form-control" />
-        <span asp-validation-for="UserName" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="IsLockedOut"></label>
-        <input asp-for="IsLockedOut" type="checkbox" />
-    </div>
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-</form>
+        <form asp-action="EditUser" method="post" class="form">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
+            <div class="row g-9 mb-8">
+                <div class="col-md-6 fv-row">
+                    <label asp-for="FirstName" class="required fs-6 fw-semibold mb-2"></label>
+                    <input asp-for="FirstName" class="form-control form-control-solid" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 fv-row">
+                    <label asp-for="LastName" class="required fs-6 fw-semibold mb-2"></label>
+                    <input asp-for="LastName" class="form-control form-control-solid" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row g-9 mb-8">
+                <div class="col-md-6 fv-row">
+                    <label asp-for="UserName" class="fs-6 fw-semibold mb-2"></label>
+                    <input asp-for="UserName" class="form-control form-control-solid" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 fv-row">
+                    <label asp-for="Email" class="fs-6 fw-semibold mb-2"></label>
+                    <input asp-for="Email" class="form-control form-control-solid" readonly />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row g-9 mb-8">
+                <div class="col-md-6 fv-row">
+                    <label asp-for="TelNumber" class="required fs-6 fw-semibold mb-2"></label>
+                    <input asp-for="TelNumber" class="form-control form-control-solid" />
+                    <span asp-validation-for="TelNumber" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 fv-row">
+                    <label asp-for="PhoneNumber" class="required fs-6 fw-semibold mb-2"></label>
+                    <input asp-for="PhoneNumber" class="form-control form-control-solid" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+            </div>
 
-<a asp-action="Index">Back to User List</a>
+            <div class="row g-9 mb-8">
+                <div class="col-md-6 fv-row">
+                    <label asp-for="IsLockedOut" class="fs-6 fw-semibold mb-2">Locked Out</label>
+                    <input asp-for="IsLockedOut" type="checkbox" class="form-check-input" />
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">
+                    <span class="indicator-label">Save Changes</span>
+                </button>
+                <a asp-action="Index" class="btn btn-light me-3">Back to User List</a>
+            </div>
+        </form>
+    </div>
+</div>
