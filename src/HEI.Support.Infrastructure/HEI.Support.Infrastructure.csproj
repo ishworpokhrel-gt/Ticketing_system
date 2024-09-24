@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HEI.Support.Common\HEI.Support.Common.csproj" />
     <ProjectReference Include="..\HEI.Support.Domain\HEI.Support.Domain.csproj" />
   </ItemGroup>
 

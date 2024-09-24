@@ -17,7 +17,8 @@
             <th>Description</th>
             <th>Priority</th>
             <th>Status</th>
-            <th>Assignee</th>
+            <th>Asignee</th>
+            <th>Created By</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -29,10 +30,10 @@
                 <td>@item.Description</td>
                 <td>@item.PriorityValue</td>
                 <td>@item.StatusValue</td>
+                <td>@item.AsignTo</td>
+                <td>@item.CreatedBy</td>
 @*                 <td id="assignee-@item.Id">@item.AssigneeName</td> <!-- Display Assignee's Name -->
- *@
-                 <td></td>
-                <td>
+ *@                <td>
                     <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#assignToModal-@item.Id">Assign To</button> |
                     @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info" })
                 </td>
@@ -53,11 +54,18 @@
                 </div>
                 <div class="modal-body">
                     <div class="list-group">
-                        <!-- Example of IT support members. Replace with dynamic data -->
-                        <a href="@Url.Action("AssignTo", "Ticket", new { id = item.Id, memberId = 1 })" class="list-group-item list-group-item-action">John Doe</a>
-                        <a href="@Url.Action("AssignTo", "Ticket", new { id = item.Id, memberId = 2 })" class="list-group-item list-group-item-action">Jane Smith</a>
-                        <a href="@Url.Action("AssignTo", "Ticket", new { id = item.Id, memberId = 3 })" class="list-group-item list-group-item-action">Michael Johnson</a>
-                        <a href="@Url.Action("AssignTo", "Ticket", new { id = item.Id, memberId = 4 })" class="list-group-item list-group-item-action">Emily Davis</a>
+                        <form asp-action="AssignTo" method="post">
+                            <input type="hidden" name="TicketId" value="@item.Id" />
+                            @foreach (var user in ViewBag.Users)
+                            {
+                                <button type="submit" name="UserId" value="@user.Value"
+                                        class="list-group-item list-group-item-action">
+                                    @user.Text
+                                </button>
+                            }
+                        </form>
+
+                        
                     </div>
                 </div>
                 <div class="modal-footer">
