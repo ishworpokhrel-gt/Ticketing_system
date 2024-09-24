@@ -135,7 +135,7 @@ namespace HEI.Support.WebApp.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangeRoleUser(ChangeRoleViewModel model)
         {
-            var result = await _userManagementService.ChangeUserRolesAsync(model.UserId, model.SelectedRoles);
+            var result = await _userManagementService.ChangeUserRolesAsync(model.UserId, model.SelectedRole);
             TempData["Message"] = result ? "User roles updated successfully." : "Error updating roles.";
             return RedirectToAction("Index");
         }

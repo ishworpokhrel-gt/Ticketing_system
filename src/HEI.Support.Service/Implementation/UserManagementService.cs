@@ -38,9 +38,10 @@ namespace HEI.Support.Service.Implementation
         {
             string password = GenerateRandomPassword(12);
 
-            // Create a new user object
             var user = new ApplicationUser
             {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
                 Email = model.Email,
                 UserName = model.UserName,
                 PhoneNumber = model.PhoneNumber,
@@ -52,18 +53,13 @@ namespace HEI.Support.Service.Implementation
             if (result.Succeeded)
             {
                 _logger.LogInformation("User created a new account with password.");
-
-                // Assign default role
-                var role = "EndUser";
-                var roleResult = await _userManager.AddToRoleAsync(user, role);
+                var roleResult = await _userManager.AddToRoleAsync(user, model.SelectedRole);
 
                 if (!roleResult.Succeeded)
                 {
                     var errorMessage = string.Join("~", roleResult.Errors.Select(error => error.Description));
                     return (false, errorMessage);
                 }
-
-                // Send email confirmation
                 var userId = await _userManager.GetUserIdAsync(user);
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -116,6 +112,8 @@ namespace HEI.Support.Service.Implementation
                 userViewModels.Add(new UserViewModel
                 {
                     Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
                     Email = user.Email,
                     UserName = user.UserName,
                     IsLockedOut = user.LockoutEnd.HasValue &&
@@ -124,7 +122,7 @@ namespace HEI.Support.Service.Implementation
                     //LastLoginTime = IsValidDate(user.LastLoginTime) ? user.LastLoginTime : null,
                     //LastLogoutTime = IsValidDate(user.LastLogoutTime) ? user.LastLogoutTime : null,
                     FailedLoginAttempts = user.AccessFailedCount,
-                    Roles = roles.ToList()
+                    Role = roles.FirstOrDefault()
                 });
             }
 
@@ -204,16 +202,17 @@ namespace HEI.Support.Service.Implementation
             return result.Succeeded;
         }
 
-        public async Task<bool> ChangeUserRolesAsync(string userId, List<string> selectedRoles)
+        public async Task<bool> ChangeUserRolesAsync(string userId, string selectedRole)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null) return false;
 
             var currentRoles = await _userManager.GetRolesAsync(user);
             await _userManager.RemoveFromRolesAsync(user, currentRoles);
-            var result = await _userManager.AddToRolesAsync(user, selectedRoles);
+            var result = await _userManager.AddToRoleAsync(user, selectedRole);
             return result.Succeeded;
         }
+
         public async Task<List<string>> GetUserRolesAsync(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);

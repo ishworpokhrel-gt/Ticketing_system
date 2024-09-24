@@ -9,7 +9,7 @@ namespace HEI.Support.Service.Interface
         Task<bool> UpdateUserAsync(EditUserViewModel model);
         Task<bool> DisableUserAsync(string id);
         Task<bool> EnableUserAsync(string id);
-        Task<bool> ChangeUserRolesAsync(string userId, List<string> selectedRoles);
+        Task<bool> ChangeUserRolesAsync(string userId, string selectedRole);
         Task<List<string>> GetUserRolesAsync(string userId);
         Task<List<string>> GetAllRolesAsync();
         Task<(bool status, string message)> RegisterUserAsync(RegisterUserViewModel model);
