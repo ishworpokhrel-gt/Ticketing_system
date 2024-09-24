@@ -10,6 +10,7 @@
         public bool IsLockedOut { get; set; }
         public DateTimeOffset? RegistrationDate { get; set; }
         public string Role { get; set; }
+        public List<string>? Roles { get; set; }
         public DateTime? LastLoginTime { get; set; }
         public DateTime? LastLogoutTime { get; set; }
         public int FailedLoginAttempts { get; set; }
