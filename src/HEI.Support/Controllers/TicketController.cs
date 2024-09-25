@@ -8,18 +8,18 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HEI.Support.WebApp.Controllers
 {
-	public class TicketController : Controller
-	{
+    public class TicketController : Controller
+    {
         private readonly ITicketService _ticketService;
         private readonly UserManager<ApplicationUser> _userManager;
-        public TicketController(ITicketService ticketService, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager)
+        public TicketController(ITicketService ticketService,UserManager<ApplicationUser> userManager)
         {
             _ticketService = ticketService;
             _userManager = userManager;
         }
         public async Task<IActionResult> Index()
-		{
-            var tickets =  await _ticketService.GetAllTicketsAsync();
+        {
+            var tickets = await _ticketService.GetAllTicketsAsync();
             string roleName = "Support";
             var users = await _ticketService.GetUsersByRoleAsync(roleName);
             var userSelectList = users.Select(u => new SelectListItem
@@ -29,8 +29,17 @@ namespace HEI.Support.WebApp.Controllers
             }).ToList();
 
             ViewBag.Users = userSelectList;
+
+            var ticketStatus = Enum.GetValues(typeof(TicketStatus))
+                         .Cast<TicketStatus>()
+                         .Select(e => new SelectListItem
+                         {
+                             Value = ((int)e).ToString(),
+                             Text = e.ToString()
+                         }).ToList();
+            ViewBag.TicketStatus = ticketStatus;
             return View(tickets);
-		}
+        }
 
         [HttpGet]
         public async Task<IActionResult> Create()
@@ -43,7 +52,6 @@ namespace HEI.Support.WebApp.Controllers
                              Text = e.ToString()
                          }).ToList();
 
-            // Pass the issue types to the view via ViewBag
             ViewBag.IssueTypes = issueTypes;
 
             var priority = Enum.GetValues(typeof(Priority))
@@ -54,13 +62,11 @@ namespace HEI.Support.WebApp.Controllers
                             Text = e.ToString()
                         }).ToList();
 
-            // Pass the issue types to the view via ViewBag
             ViewBag.Priority = priority;
 
             return View();
         }
 
-        // POST: /Admin/Tickets/Create
         [HttpPost]
         public async Task<IActionResult> Create(TicketViewModel model)
         {
@@ -79,7 +85,6 @@ namespace HEI.Support.WebApp.Controllers
                              Text = e.ToString()
                          }).ToList();
 
-            // Pass the issue types to the view via ViewBag
             ViewBag.IssueTypes = issueTypes;
 
             var priority = Enum.GetValues(typeof(Priority))
@@ -90,11 +95,15 @@ namespace HEI.Support.WebApp.Controllers
                             Text = e.ToString()
                         }).ToList();
 
-            // Pass the issue types to the view via ViewBag
             ViewBag.Priority = priority;
             return View(model);
         }
-
+        [HttpPost]
+        public async Task<IActionResult> GetStatus(TicketStatusViewModel model)
+        {
+            var result = await _ticketService.GetTicketStatus(model.TicketId, model.TicketStatusId);
+            return RedirectToAction("Index");
+        }
         [HttpPost]
         public async Task<IActionResult> AssignTo(TicketLogViewModel model, ApplicationUser user)
         {
@@ -106,6 +115,60 @@ namespace HEI.Support.WebApp.Controllers
             await _ticketService.AssignTicketAsync(model.TicketId, model.UserId, user);
 
             return RedirectToAction("Index");
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> PickTask(Guid id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+                {
+                    return Unauthorized();
+                }
+            int status = (int)TicketStatus.InProgress;
+            bool success = await _ticketService.UpdateTaskStatusAsync(id, user.Id, status);
+            if (!success)
+                {
+                    return NotFound();
+                }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CompleteTask(Guid id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+            int status = (int)TicketStatus.Completed;
+            bool success = await _ticketService.UpdateTaskStatusAsync(id, user.Id, status);
+            if (!success)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction("Index", "Report");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CloseTask(Guid id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+            int status = (int)TicketStatus.Closed;
+            bool success = await _ticketService.UpdateTaskStatusAsync(id, user.Id, status);
+            if (!success)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction("Index", "Report");
         }
 
 
