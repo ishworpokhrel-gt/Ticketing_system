@@ -32,36 +32,31 @@ namespace HEI.Support.WebApp.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Login(LoginViewModel login)
 		{
-			if (ModelState.IsValid)
+			(int status, string message) = await _accountService.AuthenticateUser(login);
+
+			switch (status)
 			{
-				(int status, string message) = await _accountService.AuthenticateUser(login);
+				case -1:        //login failed
+					ModelState.AddModelError(string.Empty, message);
+					return View();
 
-				switch (status)
-				{
-					case -1:        //login failed
-						ModelState.AddModelError(string.Empty, message);
-						return View();
+				case 1:     //success
+					return RedirectToAction(nameof(HomeController.Index), "Home");
 
-					case 1:     //success
-						return RedirectToAction(nameof(HomeController.Index), "Home");
+				case 2:     //Email not verified
+					ModelState.AddModelError(string.Empty, message);
+					return View();
 
-					case 2:     //Email not verified
-						ModelState.AddModelError(string.Empty, message);
-						return View();
+				case 3:     //Lockout
+					ModelState.AddModelError(string.Empty, message);
+					return View("Lockout");
 
-					case 3:     //Lockout
-						ModelState.AddModelError(string.Empty, message);
-						return View("Lockout");
-
-					case 4:     //Invalid Login Attempt
-						ModelState.AddModelError(string.Empty, message);
-						return View();
-					default:
-						return View();
-
-				}
+				case 4:     //Invalid Login Attempt
+					ModelState.AddModelError(string.Empty, message);
+					return View();
+				default:
+					return View();
 			}
-			return View();
 		}
 
 		public ActionResult Register()
