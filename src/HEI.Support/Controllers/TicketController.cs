@@ -98,12 +98,12 @@ namespace HEI.Support.WebApp.Controllers
             ViewBag.Priority = priority;
             return View(model);
         }
-        [HttpPost]
-        public async Task<IActionResult> GetStatus(TicketStatusViewModel model)
-        {
-            var result = await _ticketService.GetTicketStatus(model.TicketId, model.TicketStatusId);
-            return RedirectToAction("Index");
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> GetStatus(TicketStatusViewModel model)
+        //{
+        //    var result = await _ticketService.GetTicketStatus(model.TicketId, model.TicketStatusId);
+        //    return RedirectToAction("Index");
+        //}
         [HttpPost]
         public async Task<IActionResult> AssignTo(TicketLogViewModel model, ApplicationUser user)
         {
