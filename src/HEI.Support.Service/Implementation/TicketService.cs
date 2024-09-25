@@ -73,22 +73,25 @@ namespace HEI.Support.Service.Implementation
                 {
                     var attachedFiles = await UploadImageAsync(model.Attachment);
 
-                    var userUploadItems = attachedFiles.Select(uploadedFileName => new AttachmentFile
-                    {
-                        TicketID = ticket.Id,
-                        FileUrl = uploadedFileName,
-                        CreatedDate = DateTime.UtcNow,
-                        CreatedBy = user.Id
-                    }).ToList();
-                    await _attachmentFileRepository.AddMultipleEntity(userUploadItems);
-                }
 
-                _unitOfWork.Commit();
-            }
-            catch (Exception)
-            {
-                _unitOfWork.Rollback();
-                throw;
+
+                        var userUploadItems = attachedFiles.Select(uploadedFileName => new AttachmentFile()
+                        {
+                            TicketID = ticket.Id,
+                            FileUrl = uploadedFileName,
+                            FileType = "image",
+                            CreatedDate = DateTime.UtcNow,
+                            CreatedBy = user.Id
+                        }).ToList();
+                        await _attachmentFileRepository.AddMultipleEntity(userUploadItems);
+                    }
+                    await transaction.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    throw; 
+                }
             }
         }
 

@@ -8,8 +8,8 @@
 	<div class="card-header p-lg-5">
 		<h1>Create Ticket</h1>
 	</div>
-	<div class="card-body p-lg-17">
-		<form asp-action="Create" class="form" method="post">
+	<div class="card-body p-lg-17" id="kt_modal_new_ticket">
+		<form asp-action="Create" class="form" method="post" enctype="multipart/form-data">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 			<div class="row g-9 mb-8">
@@ -55,7 +55,24 @@
 						</div>
 					</div>
 				</div>
+				<input type="file" name="Attachment" id="fileInput" multiple style="display: none;" />
 			</div>
+
+			@* <div class="fv-row mb-8">
+				<label class="fs-6 fw-semibold mb-2">Attachments</label>
+				<div class="dropzone" id="kt_modal_create_ticket_attachments">
+					<div class="dz-message needsclick align-items-center">
+						<i class="ki-duotone ki-file-up fs-3hx text-primary">
+							<span class="path1"></span>
+							<span class="path2"></span>
+						</i>
+						<div class="ms-4">
+							<h3 class="fs-5 fw-bold text-gray-900 mb-1">Drop files here or click to upload.</h3>
+							<span class="fw-semibold fs-7 text-gray-400">Upload up to 10 files</span>
+						</div>
+					</div>
+				</div>
+			</div> *@
 			<div class="text-center">
 				<a asp-action="Index" type="reset" id="kt_modal_new_ticket_cancel" class="btn btn-light me-3">Cancel</a>
 				<button type="submit" id="kt_modal_new_ticket_submit" class="btn btn-primary">
@@ -65,3 +82,57 @@
 		</form>
 	</div>
 </div>
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		var myDropzone = new Dropzone("#kt_modal_create_ticket_attachments", {
+			url: '/YourController/Create', // This URL is for Dropzone initialization
+			maxFilesize: 2, // MB
+			maxFiles: 10,
+			acceptedFiles: ".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx",
+			autoProcessQueue: false, // Prevent automatic upload
+			init: function () {
+				var dz = this;
+
+				// Handle the form submission
+				document.querySelector("form").addEventListener("submit", function (e) {
+					e.preventDefault(); // Prevent default form submission
+
+					// Prepare form data
+					var formData = new FormData(this);
+
+					// Add Dropzone files to FormData
+					dz.files.forEach(function (file) {
+						formData.append('Attachment', file); // Append files to Attachment property
+					});
+
+					// Submit the form data
+					fetch(this.action, {
+						method: 'POST',
+						body: formData
+					})
+						.then(response => {
+							if (response.ok) {
+								return response.json(); // Handle the response as needed
+							}
+							throw new Error('Network response was not ok.');
+						})
+						.then(data => {
+							console.log('Success:', data);
+							window.location.href = '/YourRedirectUrl'; // Redirect on success
+						})
+						.catch(error => {
+							console.error('Error:', error);
+						});
+				});
+
+				// Allow files to be added when the Dropzone is clicked
+				this.on("drop", function (files) {
+					files.forEach(function (file) {
+						dz.addFile(file); // Add dropped file to Dropzone
+					});
+				});
+			}
+		});
+	});
+
+</script>
