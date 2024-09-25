@@ -29,12 +29,17 @@
                 <td>@item.IssueTypeValue</td>
                 <td>@item.Description</td>
                 <td>@item.PriorityValue</td>
-                <td>@item.StatusValue</td>
+                <td>
+                    <form asp-action="GetStatus" method="post" id="statusForm-@item.Id">
+                        <input type="hidden" name="TicketId" value="@item.Id" />
+                        <select asp-for="@item.Status" class="form-select form-select-solid" data-control="select2" data-hide-search="true" asp-items="ViewBag.TicketStatus" onchange="submitStatusForm('@item.Id')"></select>
+                    </form>
+                </td>
                 <td>@item.AsignTo</td>
                 <td>@item.CreatedBy</td>
-@*                 <td id="assignee-@item.Id">@item.AssigneeName</td> <!-- Display Assignee's Name -->
- *@                <td>
+                <td>
                     <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#assignToModal-@item.Id">Assign To</button> |
+                    <a class="btn btn-success" asp-action="PickTask" asp-route-id="@item.Id">Pick Task</a> |
                     @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info" })
                 </td>
             </tr>
@@ -75,3 +80,8 @@
         </div>
     </div>
 }
+<script>
+    function submitStatusForm() {
+        document.getElementById('statusForm').submit();
+    }
+</script>
