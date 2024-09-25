@@ -76,6 +76,7 @@ namespace HEI.Support.Service.Implementation
                         {
                             TicketID = ticket.Id,
                             FileUrl = uploadedFileName,
+                            FileType = "image",
                             CreatedDate = DateTime.UtcNow,
                             CreatedBy = user.Id
                         }).ToList();

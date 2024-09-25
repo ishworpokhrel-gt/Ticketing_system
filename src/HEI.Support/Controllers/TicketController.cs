@@ -69,7 +69,7 @@ namespace HEI.Support.WebApp.Controllers
 
                 var user = await _userManager.GetUserAsync(User);
                 await _ticketService.CreateTicketAsync(model, user);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
             var issueTypes = Enum.GetValues(typeof(IssueType))
                          .Cast<IssueType>()
