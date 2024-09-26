@@ -166,22 +166,22 @@ namespace HEI.Support.WebApp.Controllers
 			}
 		}
 
-		public IActionResult ResetPassword(string code = null)
+		public IActionResult ResetPassword(string code = null, string userName = null)
 		{
-			ResetPasswordViewModel Input;
 			if (code == null)
 			{
 				return BadRequest("A code must be supplied for password reset.");
 			}
-			else
+
+			var input = new ResetPasswordViewModel
 			{
-				Input = new ResetPasswordViewModel
-				{
-					Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
-				};
-			}
-			return View(Input);
+				Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code)),
+				UserName = userName
+			};
+
+			return View(input);
 		}
+
 
 		[HttpPost]
 		public async Task<IActionResult> ResetPassword(ResetPasswordViewModel ResetPasswordViewModel)
@@ -191,7 +191,7 @@ namespace HEI.Support.WebApp.Controllers
 				return View();
 			}
 
-			var user = await _userManager.FindByEmailAsync(ResetPasswordViewModel.UserName);
+			var user = await _userManager.FindByNameAsync(ResetPasswordViewModel.UserName);
 			if (user == null)
 			{
 				// Don't reveal that the user does not exist
@@ -228,8 +228,16 @@ namespace HEI.Support.WebApp.Controllers
 
 			code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
 			var result = await _userManager.ConfirmEmailAsync(user, code);
-			bool Status = result.Succeeded ? true : false;
-			return View("~/Views/Account/ConfirmEmailStatus.cshtml", Status);
+
+			if (result.Succeeded)
+			{
+				var resetCode = await _userManager.GeneratePasswordResetTokenAsync(user);
+				resetCode = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(resetCode));
+
+				return RedirectToAction("ResetPassword", new { code = resetCode, userName = user.UserName });
+			}
+
+			return View("~/Views/Account/ConfirmEmailStatus.cshtml", false);
 		}
 
 		public IActionResult AccessDenied()

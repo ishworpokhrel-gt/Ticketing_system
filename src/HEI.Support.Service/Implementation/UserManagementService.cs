@@ -36,8 +36,6 @@ namespace HEI.Support.Service.Implementation
         }
         public async Task<(bool status, string message)> RegisterUserAsync(RegisterUserViewModel model)
         {
-            string password = GenerateRandomPassword(12);
-
             var user = new ApplicationUser
             {
                 FirstName = model.FirstName,
@@ -47,20 +45,14 @@ namespace HEI.Support.Service.Implementation
                 PhoneNumber = model.PhoneNumber,
                 TelNumber = model.TelNumber,
             };
-
-            var result = await _userManager.CreateAsync(user, password);
+            var password = model.UserName + "." + model.LastName;
+            var result = await _userManager.CreateAsync(user,password);
 
             if (result.Succeeded)
             {
-                _logger.LogInformation("User created a new account with password.");
-                var roleResult = await _userManager.AddToRoleAsync(user, model.SelectedRole);
+                _logger.LogInformation("User created a new account.");
 
-                if (!roleResult.Succeeded)
-                {
-                    var errorMessage = string.Join("~", roleResult.Errors.Select(error => error.Description));
-                    return (false, errorMessage);
-                }
-                var userId = await _userManager.GetUserIdAsync(user);
+                // Generate email confirmation token
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
@@ -69,17 +61,33 @@ namespace HEI.Support.Service.Implementation
 
                 var routeValues = new
                 {
-                    userId = userId,
+                    userId = user.Id,
                     code = code
                 };
 
-                var url = _linkGenerator.GetPathByAction("ConfirmEmail", "Account", values: routeValues);
-                var completeUrl = $"{protocol}://{host}{url}";
+                var confirmUrl = _linkGenerator.GetPathByAction("Login", "Account", values: routeValues);
+                var completeConfirmUrl = $"{protocol}://{host}{confirmUrl}";
 
-                var email = await _emailSender.SendMailAsync(user.Email, "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(completeUrl)}'>clicking here</a>.");
+                // Constructing the email body
+                var emailBody = $@"
+            <html>
+            <body>
+                <h2>Welcome to Our Service, {user.FirstName}!</h2>
+                <p>Thank you for registering. Your account has been created successfully.</p>
+                <p><strong>Your Account Details:</strong></p>
+                <ul>
+                    <li><strong>Username:</strong> {user.UserName}</li>
+                    <li><strong>Password:</strong> {password}</li>
+                </ul>
+                <p>Please confirm your email by clicking the link below:</p>
+                <p><a href='{HtmlEncoder.Default.Encode(completeConfirmUrl)}'>Confirm your email</a></p>
+                <p>Best Regards,<br>Your Company Name</p>
+            </body>
+            </html>";
 
-                await _signInManager.SignInAsync(user, isPersistent: false);
+                // Send email confirmation link
+                await _emailSender.SendMailAsync(user.Email, "Welcome to Our Service!", emailBody);
+
                 return (true, "Registration successful.");
             }
             else
@@ -89,16 +97,17 @@ namespace HEI.Support.Service.Implementation
             }
         }
 
-        private string GenerateRandomPassword(int length)
-        {
-            const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()";
-            using (var rng = new RNGCryptoServiceProvider())
-            {
-                var bytes = new byte[length];
-                rng.GetBytes(bytes);
-                return new string(Enumerable.Range(0, length).Select(i => validChars[bytes[i] % validChars.Length]).ToArray());
-            }
-        }
+
+        //private string GenerateRandomPassword(int length)
+        //      {
+        //          const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()";
+        //          using (var rng = new RNGCryptoServiceProvider())
+        //          {
+        //              var bytes = new byte[length];
+        //              rng.GetBytes(bytes);
+        //              return new string(Enumerable.Range(0, length).Select(i => validChars[bytes[i] % validChars.Length]).ToArray());
+        //          }
+        //      }
 
         public async Task<List<UserViewModel>> GetAllUsersAsync()
         {
