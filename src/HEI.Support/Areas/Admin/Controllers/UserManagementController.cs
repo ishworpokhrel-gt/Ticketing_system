@@ -1,13 +1,11 @@
 ﻿using HEI.Support.Common.Models;
 using HEI.Support.Service.Interface;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HEI.Support.WebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles="Admin")]
     public class UserManagementController : Controller
     {
         private readonly IUserManagementService _userManagementService;
@@ -23,29 +21,19 @@ namespace HEI.Support.WebApp.Areas.Admin.Controllers
         }
         public async Task<IActionResult> RegisterUser()
         {
-            var allRoles = await _userManagementService.GetAllRolesAsync();
-
-            var filteredRoles = allRoles
-                .Where(role => role == "EndUser" || role == "Support")
-                .Select(role => new SelectListItem
-                {
-                    Value = role,
-                    Text = role
-                })
-                .ToList();
-
-            var orderedRoles = filteredRoles
-                .OrderBy(role => role.Text == "EndUser" ? 0 : 1)
-                .ToList();
-
             var model = new RegisterUserViewModel
             {
-                AvailableRoles = orderedRoles
+                // Fetch available roles from the service and populate
+                AvailableRoles = (await _userManagementService.GetAllRolesAsync())
+            .Select(role => new SelectListItem
+            {
+                Value = role,
+                Text = role
+            }).ToList()
             };
 
             return View(model);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> RegisterUser(RegisterUserViewModel model)

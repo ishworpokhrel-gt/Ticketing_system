@@ -19,6 +19,7 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
             var data = await _context.Tickets
                 .Include(t => t.ActivityLogs)
                 .ThenInclude(a => a.User)
+                .OrderByDescending(t => t.CreatedDate)
                 .Select(ticket => new TicketViewModel
                 {
                     Id = ticket.Id,
