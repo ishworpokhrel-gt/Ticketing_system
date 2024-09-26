@@ -18,6 +18,7 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
             var data = await _context.Tickets
                 .Include(t => t.ActivityLogs)
                 .ThenInclude(a => a.User)
+                .OrderByDescending(t => t.CreatedDate)
                 .Select(ticket => new TicketViewModel
                 {
                     Id = ticket.Id,
@@ -40,6 +41,18 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
 
             return data;
         }
+
+        public async Task<string> GetTicketAssignee(Guid ticketId, int status)
+        {
+            var assignee = await _context.ActivityLogs
+                         .Include(a => a.User)
+                         .Where(al => al.Status == status && al.TicketId==ticketId)
+                         .Select(al => al.User.FirstName + " " + al.User.LastName)
+                         .FirstOrDefaultAsync();
+
+            return assignee??"";
+        }
+
 
     }
 }

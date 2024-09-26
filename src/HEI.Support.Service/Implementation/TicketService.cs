@@ -73,42 +73,42 @@ namespace HEI.Support.Service.Implementation
 				{
 					var attachedFiles = await UploadImageAsync(model.Attachment);
 
-					var userUploadItems = attachedFiles.Select(uploadedFileName => new AttachmentFile
-					{
-						TicketID = ticket.Id,
-						FileUrl = uploadedFileName,
-						FileType = "Image",
-						CreatedDate = DateTime.UtcNow,
-						CreatedBy = user.Id
-					}).ToList();
-					await _attachmentFileRepository.AddMultipleEntity(userUploadItems);
-				}
 
-				_unitOfWork.Commit();
-			}
-			catch (Exception)
-			{
-				_unitOfWork.Rollback();
-				throw;
-			}
-		}
 
-		public async Task<List<TicketViewModel>> GetAllTicketsAsync()
-		{
-			var data = await _ticketRepository.GetAllTicketsAsync();
-			return data;
-		}
-		public async Task<List<string>> UploadImageAsync(List<IFormFile> files)
-		{
-			var uniqueFileName = new List<string>();
-			var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "Ticket");
-			if (!Directory.Exists(folderPath))
-			{
-				Directory.CreateDirectory(folderPath);
-			}
-			foreach (var item in files)
-			{
-				var renamedFileName = $"{DateTime.Now.Year}{DateTime.Now.Month}{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}{DateTime.Now.Second}{DateTime.Now.Millisecond}";
+                        var userUploadItems = attachedFiles.Select(uploadedFileName => new AttachmentFile()
+                        {
+                            TicketID = ticket.Id,
+                            FileUrl = uploadedFileName,
+                            FileType = "image",
+                            CreatedDate = DateTime.UtcNow,
+                            CreatedBy = user.Id
+                        }).ToList();
+                        await _attachmentFileRepository.AddMultipleEntity(userUploadItems);
+                    }
+                _unitOfWork.Commit();
+                }
+                catch (Exception ex)
+                {
+                _unitOfWork.Rollback();
+                    throw; 
+                }
+            }
+        public async Task<List<TicketViewModel>> GetAllTicketsAsync()
+        {
+            var data = await _ticketRepository.GetAllTicketsAsync();
+            return data;
+        }
+        public async Task<List<string>> UploadImageAsync(List<IFormFile> files)
+        {
+            var uniqueFileName = new List<string>();
+            var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "Ticket");
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+            foreach (var item in files)
+            {
+                var renamedFileName = $"{DateTime.Now.Year}{DateTime.Now.Month}{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}{DateTime.Now.Second}{DateTime.Now.Millisecond}";
 
 				var fileName = $"{renamedFileName}{Path.GetExtension(item.FileName)}";
 
@@ -122,23 +122,28 @@ namespace HEI.Support.Service.Implementation
 		}
 		public async Task<TicketViewModel> GetTicketByIdAsync(Guid ticketId)
 
-		{
-			var ticket = await _ticketRepository.GetAsync(ticketId);
-			if (ticket == null)
-			{
-				throw new KeyNotFoundException($"Ticket with Id {ticketId} not found.");
-			}
-
-			var result = new TicketViewModel
-			{
-				Id = ticket.Id,
-				IssueType = ticket.IssueTypeId,
-				Description = ticket.Description,
-				Priority = ticket.Priority,
-				Status = ticket.Status,
-				Attachments = ticket.Attachments?.Select(a => new AttachmentFileViewModel
-				{
-					FilePath = a.FileUrl
+        {
+            var ticket = await _ticketRepository.GetAsync(ticketId);
+            if (ticket == null)
+            {
+                throw new KeyNotFoundException($"Ticket with Id {ticketId} not found.");
+            }
+            var user = await _userManager.FindByIdAsync(ticket.CreatedBy);
+            var pickedBy = await _ticketRepository.GetTicketAssignee(ticketId, ticket.Status);
+            var ticketDetails = new TicketViewModel
+            {
+                Id = ticket.Id,
+                FullName=ticket.FullName,
+                Phone=ticket.Phone,
+                CreatedBy=user.FirstName + " (" + user.LastName+")",
+                Assignee = pickedBy,
+                IssueType = ticket.IssueTypeId,
+                Description = ticket.Description,
+                Priority = ticket.Priority,
+                Status = ticket.Status,
+                Attachments = ticket.Attachments?.Select(a => new AttachmentFileViewModel
+                {
+                    FilePath = a.FileUrl
 
 				}).ToList(),
 				Comments = ticket.Comments?.Select(c => new CommentViewModel
@@ -151,7 +156,7 @@ namespace HEI.Support.Service.Implementation
 				}).ToList()
 			};
 
-			return result;
+            return ticketDetails;
 
 		}
 		public async Task<List<UserViewModel>> GetUsersByRoleAsync(string roleName)

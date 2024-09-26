@@ -105,8 +105,9 @@ namespace HEI.Support.WebApp.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public async Task<IActionResult> AssignTo(TicketLogViewModel model, ApplicationUser user)
+        public async Task<IActionResult> AssignTo(TicketLogViewModel model)
         {
+            var user = await _userManager.GetUserAsync(User);
             if (model.TicketId == Guid.Empty || string.IsNullOrEmpty(model.UserId))
             {
                 return BadRequest("Invalid ticket or user.");
@@ -135,7 +136,7 @@ namespace HEI.Support.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> CompleteTask(Guid id)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -150,10 +151,10 @@ namespace HEI.Support.WebApp.Controllers
                 return NotFound();
             }
 
-            return RedirectToAction("Index", "Report");
+            return RedirectToAction("Index", "Ticket");
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> CloseTask(Guid id)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -168,7 +169,19 @@ namespace HEI.Support.WebApp.Controllers
                 return NotFound();
             }
 
-            return RedirectToAction("Index", "Report");
+            return RedirectToAction("Index", "Ticket");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> TicketDetails(Guid id)
+        {
+            var ticketDetails = await _ticketService.GetTicketByIdAsync(id);
+            if (ticketDetails == null)
+            {
+                return NotFound();
+            }
+
+            return View(ticketDetails);
         }
     }
 }
