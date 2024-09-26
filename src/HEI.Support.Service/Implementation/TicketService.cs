@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Net.Mail;
 using System.Net.Sockets;
 using System.Security.Cryptography.X509Certificates;
@@ -116,47 +117,20 @@ namespace HEI.Support.Service.Implementation
 
 				await item.CopyToAsync(stream);
 
-				uniqueFileName.Add(Path.Combine("Ticket", fileName));
+				uniqueFileName.Add("/" + Path.Combine("Ticket", fileName));
+
 			}
 			return uniqueFileName;
 		}
 		public async Task<TicketViewModel> GetTicketByIdAsync(Guid ticketId)
 
         {
-            var ticket = await _ticketRepository.GetAsync(ticketId);
+            var ticket = await _ticketRepository.GetTicketByIdAsync(ticketId);
             if (ticket == null)
             {
                 throw new KeyNotFoundException($"Ticket with Id {ticketId} not found.");
-            }
-            var user = await _userManager.FindByIdAsync(ticket.CreatedBy);
-            var pickedBy = await _ticketRepository.GetTicketAssignee(ticketId, ticket.Status);
-            var ticketDetails = new TicketViewModel
-            {
-                Id = ticket.Id,
-                FullName=ticket.FullName,
-                Phone=ticket.Phone,
-                CreatedBy=user.FirstName + " (" + user.LastName+")",
-                Assignee = pickedBy,
-                IssueType = ticket.IssueTypeId,
-                Description = ticket.Description,
-                Priority = ticket.Priority,
-                Status = ticket.Status,
-                Attachments = ticket.Attachments?.Select(a => new AttachmentFileViewModel
-                {
-                    FilePath = a.FileUrl
-
-				}).ToList(),
-				Comments = ticket.Comments?.Select(c => new CommentViewModel
-				{
-					Content = c.Content,
-				}).ToList(),
-				ActivityLogs = ticket.ActivityLogs?.Select(l => new ActivityLogViewModel
-				{
-					Status = ticket.Status
-				}).ToList()
-			};
-
-            return ticketDetails;
+            }    
+                return ticket;
 
 		}
 		public async Task<List<UserViewModel>> GetUsersByRoleAsync(string roleName)
@@ -273,108 +247,6 @@ namespace HEI.Support.Service.Implementation
 		{
 			throw new NotImplementedException();
 		}
-
-		//public async Task<IEnumerable<TicketViewModel>> GetTicketsByUserIdAsync(string userId)
-		//{
-		//	return await _context.Tickets
-		//		.Where(t => t.CreatedBy == userId)
-		//		.Select(t => new TicketViewModel
-		//		{
-		//			Id = t.Id,
-		//			Description = t.Description,
-		//			Priority = t.Priority,
-		//			Comments = t.Comments.Select(c => new CommentViewModel
-		//			{
-		//				Id = c.Id,
-		//				Content = c.Content,
-
-		//			}).ToList(),
-		//			Attachments = t.Attachments.Select(a => new AttachmentFileViewModel
-		//			{
-		//				Id = a.Id,
-		//				FileName = a.FileName,
-		//				FilePath = a.FilePath,
-		//			}).ToList(),
-		//			ActivityLogs = t.ActivityLogs.Select(a => new ActivityLogViewModel
-		//			{
-		//				Id = a.Id,
-		//				Status = a.Status,
-
-		//			}).ToList()
-		//		}).ToListAsync();
-		//}
-
-		//public async Task<IEnumerable<TicketViewModel>> GetTicketsBySupportUserIdAsync(string supportUserId)
-		//{
-		//	return await _context.Tickets
-		//		.Where(t => t.CreatedBy == supportUserId)  // Assuming Support User is also a user and tickets are assigned by UserID
-		//		.Select(t => new TicketViewModel
-		//		{
-		//			Id = t.Id,
-		//			Description = t.Description,
-		//			Priority = t.Priority,
-
-		//			Comments = t.Comments.Select(c => new CommentViewModel
-		//			{
-		//				Id = c.Id,
-		//				Content = c.Content,
-
-		//			}).ToList(),
-		//			Attachments = t.Attachments.Select(a => new AttachmentFileViewModel
-		//			{
-		//				Id = a.Id,
-		//				FileName = a.FileName,
-		//				FilePath = a.FilePath,
-		//			}).ToList(),
-		//			ActivityLogs = t.ActivityLogs.Select(a => new ActivityLogViewModel
-		//			{
-		//				Id = a.Id,
-
-		//			}).ToList()
-		//		}).ToListAsync();
-		//}
-
-		//public async Task<TicketViewModel> GetTicketByIdAsync(Guid ticketId)
-		//{
-		//	var ticket = await _context.Tickets
-		//		.Where(t => t.Id == ticketId)
-		//		.Select(t => new TicketViewModel
-		//		{
-		//			Id = t.Id,
-		//			Description = t.Description,
-		//			Priority = t.Priority,
-		//			Comments = t.Comments.Select(c => new CommentViewModel
-		//			{
-		//				Id = c.Id,
-		//				Content = c.Content,
-		//			}).ToList(),
-		//			Attachments = t.Attachments.Select(a => new AttachmentFileViewModel
-		//			{
-		//				Id = a.Id,
-		//				FileName = a.FileName,
-		//				FilePath = a.FilePath,
-		//			}).ToList(),
-		//			ActivityLogs = t.ActivityLogs.Select(a => new ActivityLogViewModel
-		//			{
-		//				Id = a.Id
-		//			}).ToList()
-		//		}).FirstOrDefaultAsync();
-
-		//	return ticket;
-		//}
-
-		//public async Task UpdateTicketAsync(TicketViewModel model)
-		//{
-		//	var ticket = await _context.Tickets.FindAsync(model.Id);
-		//	if (ticket != null)
-		//	{
-		//		ticket.Description = model.Description;
-		//		ticket.Priority = model.Priority;
-		//		// Optionally update related entities here
-
-		//		_context.Tickets.Update(ticket);
-		//		await _context.SaveChangesAsync();
-		//	}
-		//}
+		
 	}
 }

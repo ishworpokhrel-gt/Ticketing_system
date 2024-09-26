@@ -12,7 +12,7 @@ namespace HEI.Support.WebApp.Controllers
     {
         private readonly ITicketService _ticketService;
         private readonly UserManager<ApplicationUser> _userManager;
-        public TicketController(ITicketService ticketService,UserManager<ApplicationUser> userManager)
+        public TicketController(ITicketService ticketService, UserManager<ApplicationUser> userManager)
         {
             _ticketService = ticketService;
             _userManager = userManager;
@@ -40,7 +40,6 @@ namespace HEI.Support.WebApp.Controllers
             ViewBag.TicketStatus = ticketStatus;
             return View(tickets);
         }
-
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -66,7 +65,6 @@ namespace HEI.Support.WebApp.Controllers
 
             return View();
         }
-
         [HttpPost]
         public async Task<IActionResult> Create(TicketViewModel model)
         {
@@ -117,25 +115,22 @@ namespace HEI.Support.WebApp.Controllers
 
             return RedirectToAction("Index");
         }
-
-
         [HttpGet]
         public async Task<IActionResult> PickTask(Guid id)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
-                {
-                    return Unauthorized();
-                }
+            {
+                return Unauthorized();
+            }
             int status = (int)TicketStatus.InProgress;
             bool success = await _ticketService.UpdateTaskStatusAsync(id, user.Id, status);
             if (!success)
-                {
-                    return NotFound();
-                }
+            {
+                return NotFound();
+            }
             return RedirectToAction("Index");
         }
-
         [HttpGet]
         public async Task<IActionResult> CompleteTask(Guid id)
         {
@@ -153,7 +148,6 @@ namespace HEI.Support.WebApp.Controllers
 
             return RedirectToAction("Index", "Ticket");
         }
-
         [HttpGet]
         public async Task<IActionResult> CloseTask(Guid id)
         {
@@ -171,7 +165,6 @@ namespace HEI.Support.WebApp.Controllers
 
             return RedirectToAction("Index", "Ticket");
         }
-
         [HttpGet]
         public async Task<IActionResult> TicketDetails(Guid id)
         {

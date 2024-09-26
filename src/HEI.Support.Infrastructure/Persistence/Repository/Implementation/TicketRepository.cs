@@ -22,6 +22,8 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
                 .Select(ticket => new TicketViewModel
                 {
                     Id = ticket.Id,
+                    FullName = ticket.FullName,
+                    Phone = ticket.Phone,
                     IssueType = ticket.IssueTypeId,
                     Description = ticket.Description,
                     Priority = ticket.Priority,
@@ -29,12 +31,12 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
                     AsignTo = ticket.ActivityLogs
                         .Where(al => al.Status == (int)TicketStatus.InProgress)
                         .OrderByDescending(al => al.CreatedDate)
-                        .Select(al => al.User.UserName)
+                        .Select(al => al.User.FirstName + " " + al.User.LastName)
                         .FirstOrDefault() ?? "",
                     CreatedBy = ticket.ActivityLogs
                         .Where(al => al.Status == (int)TicketStatus.Open)
                         .OrderByDescending(al => al.CreatedDate)
-                        .Select(al => al.User.UserName)
+                        .Select(al => al.User.FirstName + " " + al.User.LastName)
                         .FirstOrDefault() ?? ""
                 })
                 .ToListAsync();
@@ -46,12 +48,88 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
         {
             var assignee = await _context.ActivityLogs
                          .Include(a => a.User)
-                         .Where(al => al.Status == status && al.TicketId==ticketId)
+                         .Where(al => al.Status == status && al.TicketId == ticketId)
                          .Select(al => al.User.FirstName + " " + al.User.LastName)
                          .FirstOrDefaultAsync();
 
-            return assignee??"";
+            return assignee ?? "";
         }
+
+
+        public async Task<TicketViewModel> GetTicketByIdAsync(Guid id)
+        {
+            var ticket = await _context.Tickets
+                .Include(t => t.Attachments)
+                .Include(t => t.ActivityLogs)
+                .ThenInclude(al => al.User)
+                .Where(t => t.Id == id)
+                .OrderByDescending(t => t.CreatedDate)
+                .Select(t => new TicketViewModel
+                {
+                    Id = t.Id,
+                    IssueType = t.IssueTypeId,
+                    FullName = t.FullName,
+                    Phone = t.Phone,
+                    Description = t.Description,
+                    Priority = t.Priority,
+                    Status = t.Status,
+                    TaskPickupTime = t.ActivityLogs
+                .Where(al => al.Status == (int)TicketStatus.Open)
+                .Select(al => al.CreatedDate)
+                .FirstOrDefault() == DateTime.MinValue
+                ? "N/A"
+                : t.ActivityLogs
+                .Where(al => al.Status == (int)TicketStatus.Open)
+                .Select(al => al.CreatedDate)
+                .FirstOrDefault().ToString(),
+
+                    TaskCompletedTime = t.ActivityLogs
+                .Where(al => al.Status == (int)TicketStatus.Completed)
+                .Select(al => al.CreatedDate)
+                .FirstOrDefault() == DateTime.MinValue
+                ? "N/A"
+                : t.ActivityLogs
+                .Where(al => al.Status == (int)TicketStatus.Completed)
+                .Select(al => al.CreatedDate)
+                .FirstOrDefault().ToString(),
+
+
+
+                    TaskClosedTime = t.ActivityLogs
+                .Where(al => al.Status == (int)TicketStatus.Closed)
+                .Select(al => al.CreatedDate)
+                .FirstOrDefault() == DateTime.MinValue
+                ? "N/A"
+                : t.ActivityLogs
+                .Where(al => al.Status == (int)TicketStatus.Closed)
+                .Select(al => al.CreatedDate)
+                .FirstOrDefault().ToString(),
+
+                    Assignee = t.ActivityLogs
+                        .Where(al => al.Status == (int)TicketStatus.InProgress)
+                        .OrderByDescending(al => al.CreatedDate)
+                        .Select(al => al.User.FirstName + " " + al.User.LastName)
+                        .FirstOrDefault() ?? "",
+
+                    CreatedBy = t.ActivityLogs
+                        .Where(al => al.Status == (int)TicketStatus.Open)
+                        .OrderByDescending(al => al.CreatedDate)
+                        .Select(al => al.User.FirstName + " (" + al.User.LastName + ")")
+                        .FirstOrDefault() ?? "",
+
+                    Attachments = t.Attachments
+                        .Select(a => new AttachmentFileViewModel
+                        {
+                            FilePath = a.FileUrl
+                        }).ToList()
+                })
+                .FirstOrDefaultAsync();
+
+
+
+            return ticket;
+        }
+
 
 
     }
