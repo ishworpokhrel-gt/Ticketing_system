@@ -183,7 +183,5 @@ namespace HEI.Support.WebApp.Controllers
 
             return View(ticketDetails);
         }
-
-
     }
 }

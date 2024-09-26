@@ -99,7 +99,46 @@
 	</div>
 	@RenderSection("Scripts", required: false)
 	<script>
-		var hostUrl = "@Url.Content("~/admin/assets/")";
+		document.addEventListener('DOMContentLoaded', function () {
+			function displayAlert(message, isError = false) {
+				Swal.fire({
+					text: message,
+					icon: isError ? 'error' : 'success',
+					buttonsStyling: false,
+					confirmButtonText: 'Ok, got it!',
+					customClass: {
+						confirmButton: isError ? 'btn btn-danger' : 'btn btn-primary'
+					}
+				});
+			}
+			const isSuccess = '@TempData["IsSuccess"]';
+			const message = '@TempData["Message"]';
+
+			if (message) {
+				displayAlert(message, isSuccess == "true");
+			}
+		});
+
+		function confirmAction(event, actionUrl, message) {
+			event.preventDefault();
+			Swal.fire({
+				title: 'Confirmation',
+				text: message,
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonText: 'Yes, proceed',
+				cancelButtonText: 'No, cancel',
+				buttonsStyling: false,
+				customClass: {
+					confirmButton: 'btn btn-primary',
+					cancelButton: 'btn btn-light'
+				}
+			}).then((result) => {
+				if (result.isConfirmed) {
+					window.location.href = actionUrl;
+				}
+			});
+		}
 	</script>
 	<script src="~/assets/plugins/global/plugins.bundle.js"></script>
 	<script src="~/assets/js/scripts.bundle.js"></script>
