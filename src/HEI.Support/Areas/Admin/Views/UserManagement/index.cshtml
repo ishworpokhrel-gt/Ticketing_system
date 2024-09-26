@@ -4,10 +4,6 @@
 	ViewData["BreadCrum"] = "User Management";
 	var Sn = 1;
 }
-@if (TempData["Message"] != null)
-{
-	<div class="alert alert-info">@TempData["Message"]</div>
-}
 <div class="card">
 	<div class="card-header border-0 pt-6">
 		<div class="card-title">
@@ -125,14 +121,17 @@
 									<a asp-action="ChangeRoleUser" asp-route-id="@user.Id" class="menu-link px-3" >Change role</a>
 								</div>
 								<div class="menu-item px-3">
-									@if (user.IsLockedOut)
-									{
-										<a asp-action="Enableuser" asp-route-id="@user.Id" class="menu-link px-3">Enable</a>
-									}
-									else
-									{
-										<a asp-action="DisableUser" asp-route-id="@user.Id" class="menu-link px-3">Disable</a>
-									}
+									<div class="menu-item px-3">
+										@if (user.IsLockedOut)
+										{
+											<a href="#" class="menu-link px-3" onclick="confirmAction(event, '@Url.Action("EnableUser", new { id = user.Id })', 'Are you sure you want to enable this user?')">Enable</a>
+										}
+										else
+										{
+											<a href="#" class="menu-link px-3" onclick="confirmAction(event, '@Url.Action("DisableUser", new { id = user.Id })', 'Are you sure you want to disable this user?')">Disable</a>
+										}
+									</div>
+
 								</div>
 							</div>
 						</td>

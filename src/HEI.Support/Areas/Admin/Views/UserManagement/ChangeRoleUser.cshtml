@@ -4,6 +4,7 @@
     ViewData["Title"] = "Change User Role";
     ViewData["BreadCrum"] = "Change User Role";
 }
+
 <div class="card">
     <div class="card-header p-lg-5">
         <h1>Change User Role</h1>
@@ -11,10 +12,10 @@
     <div class="card-body p-lg-17">
         @if (TempData["Message"] != null)
         {
-            <div class="alert alert-info">@TempData["Message"]</div>
+            <div class="alert alert-info" id="tempMessage">@TempData["Message"]</div>
         }
 
-        <form asp-action="ChangeRoleUser" method="post">
+        <form asp-action="ChangeUserRole" method="post" id="kt_ecommerce_settings_general_form">
             <div class="form-group mb-4">
                 <label class="required fs-6 fw-semibold mb-2">Current Roles</label>
                 <ul class="list-unstyled">
@@ -35,7 +36,6 @@
                             @(Model.CurrentRoles.Contains(role) ? "checked='checked'" : "") id="role_@role" />
                             <label class="form-check-label" for="role_@role">
                                 <div class="fw-bold text-gray-800">@role</div>
-                                @* <div class="text-gray-600">Description for @role (optional)</div> *@
                             </label>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
 
             <input type="hidden" name="UserId" value="@Model.UserId" />
             <div class="text-center">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary" data-kt-contacts-type="submit">
                     <span class="indicator-label">Update Roles</span>
                 </button>
                 <a asp-action="Index" class="btn btn-light me-3">Back to User List</a>

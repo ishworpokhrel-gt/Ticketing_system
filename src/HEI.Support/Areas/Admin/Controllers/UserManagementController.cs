@@ -151,15 +151,26 @@ namespace HEI.Support.WebApp.Areas.Admin.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> ChangeRoleUser(ChangeRoleViewModel model)
-        {
-            var result = await _userManagementService.ChangeUserRolesAsync(model.UserId, model.SelectedRole);
-            TempData["Message"] = result ? "User roles updated successfully." : "Error updating roles.";
-            return RedirectToAction("Index");
-        }
+		[HttpPost]
+		public async Task<IActionResult> ChangeUserRole(ChangeRoleViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var success = await _userManagementService.ChangeUserRolesAsync(model.UserId, model.SelectedRole);
+				TempData["IsSuccess"] = success;
+				TempData["Message"] = success ? "User roles updated successfully." : "Error updating roles.";
+			}
+			else
+			{
+				TempData["IsSuccess"] = false;
+				TempData["Message"] = "Invalid data submitted.";
+			}
 
-        public async Task<IActionResult> DetailsUser(string id)
+			return RedirectToAction("Index");
+		}
+
+
+		public async Task<IActionResult> DetailsUser(string id)
         {
             var user = await _userManagementService.GetUserByIdAsync(id);
             if (user == null) return NotFound();
