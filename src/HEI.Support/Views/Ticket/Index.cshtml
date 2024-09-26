@@ -14,7 +14,6 @@
     <thead>
         <tr>
             <th><strong>Issue Type</strong></th>
-            <th><strong>Description</strong></th>
             <th><strong>Priority</strong></th>
             <th><strong>Status</strong></th>
             <th><strong>Assignee</strong></th>
@@ -27,20 +26,12 @@
         {
             <tr>
                 <td>@item.IssueTypeValue</td>
-                <td>@item.Description</td>
                 <td>@item.PriorityValue</td>
                 <td>@item.StatusValue</td>
-                @*  <td>
-            <form asp-action="GetStatus" method="post" id="statusForm-@item.Id">
-            <input type="hidden" name="TicketId" value="@item.Id" />
-            <select asp-for="@item.Status" class="form-select form-select-solid" data-control="select2" data-hide-search="true" asp-items="ViewBag.TicketStatus" onchange="submitStatusForm('@item.Id')"></select>
-            </form>
-            </td> *@
                 <td>@item.AsignTo</td>
                 <td>@item.CreatedBy</td>
                 <td>
-                    @*                     <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#assignToModal-@item.Id">Assign To</button> |
-                *@                    <a class="btn btn-success" asp-action="PickTask" asp-route-id="@item.Id">Pick Task</a> |
+                   <a class="btn btn-success" asp-action="PickTask" asp-route-id="@item.Id">Pick Task</a> |
                     <a class="btn btn-info" asp-action="TicketDetails" asp-route-id="@item.Id">Details</a>
                 </td>
             </tr>

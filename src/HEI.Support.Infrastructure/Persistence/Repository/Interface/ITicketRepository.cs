@@ -7,5 +7,6 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Interface
     {
         Task<List<TicketViewModel>> GetAllTicketsAsync();
         Task<string> GetTicketAssignee(Guid ticketId, int status);
+        Task<TicketViewModel> GetTicketByIdAsync(Guid id);
     }
 }
