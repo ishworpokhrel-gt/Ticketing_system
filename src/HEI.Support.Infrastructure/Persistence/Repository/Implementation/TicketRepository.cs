@@ -3,7 +3,6 @@ using HEI.Support.Common.Models.Enum;
 using HEI.Support.Domain.Entities;
 using HEI.Support.Infrastructure.Persistence.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
-using System.Net.Sockets;
 
 namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
 {
