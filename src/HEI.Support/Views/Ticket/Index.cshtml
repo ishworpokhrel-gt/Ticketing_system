@@ -13,13 +13,13 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Issue Type</th>
-            <th>Description</th>
-            <th>Priority</th>
-            <th>Status</th>
-            <th>Asignee</th>
-            <th>Created By</th>
-            <th>Actions</th>
+            <th><strong>Issue Type</strong></th>
+            <th><strong>Description</strong></th>
+            <th><strong>Priority</strong></th>
+            <th><strong>Status</strong></th>
+            <th><strong>Assignee</strong></th>
+            <th><strong>Created By</strong></th>
+            <th><strong>Actions</strong></th>
         </tr>
     </thead>
     <tbody>
@@ -29,18 +29,19 @@
                 <td>@item.IssueTypeValue</td>
                 <td>@item.Description</td>
                 <td>@item.PriorityValue</td>
-                <td>
-                    <form asp-action="GetStatus" method="post" id="statusForm-@item.Id">
-                        <input type="hidden" name="TicketId" value="@item.Id" />
-                        <select asp-for="@item.Status" class="form-select form-select-solid" data-control="select2" data-hide-search="true" asp-items="ViewBag.TicketStatus" onchange="submitStatusForm('@item.Id')"></select>
-                    </form>
-                </td>
+                <td>@item.StatusValue</td>
+                @*  <td>
+            <form asp-action="GetStatus" method="post" id="statusForm-@item.Id">
+            <input type="hidden" name="TicketId" value="@item.Id" />
+            <select asp-for="@item.Status" class="form-select form-select-solid" data-control="select2" data-hide-search="true" asp-items="ViewBag.TicketStatus" onchange="submitStatusForm('@item.Id')"></select>
+            </form>
+            </td> *@
                 <td>@item.AsignTo</td>
                 <td>@item.CreatedBy</td>
                 <td>
-                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#assignToModal-@item.Id">Assign To</button> |
-                    <a class="btn btn-success" asp-action="PickTask" asp-route-id="@item.Id">Pick Task</a> |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info" })
+                    @*                     <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#assignToModal-@item.Id">Assign To</button> |
+                *@                    <a class="btn btn-success" asp-action="PickTask" asp-route-id="@item.Id">Pick Task</a> |
+                    <a class="btn btn-info" asp-action="TicketDetails" asp-route-id="@item.Id">Details</a>
                 </td>
             </tr>
         }
@@ -70,7 +71,7 @@
                             }
                         </form>
 
-                        
+
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -80,8 +81,3 @@
         </div>
     </div>
 }
-<script>
-    function submitStatusForm() {
-        document.getElementById('statusForm').submit();
-    }
-</script>

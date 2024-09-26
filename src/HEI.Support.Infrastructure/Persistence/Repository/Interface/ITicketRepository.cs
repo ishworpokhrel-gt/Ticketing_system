@@ -6,5 +6,6 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Interface
     public interface ITicketRepository : IBaseRepository<Ticket>
     {
         Task<List<TicketViewModel>> GetAllTicketsAsync();
+        Task<string> GetTicketAssignee(Guid ticketId, int status);
     }
 }
