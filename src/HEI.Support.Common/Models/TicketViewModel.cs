@@ -15,6 +15,7 @@ namespace HEI.Support.Common.Models
         public string Phone { get; set; }
         public int Status { get; set; }
         public string? CreatedBy { get; set; }
+        public string? Assignee { get; set; }
         public string? AsignTo { get; set; }
         public List<IFormFile>? Attachment { get; set; }
 

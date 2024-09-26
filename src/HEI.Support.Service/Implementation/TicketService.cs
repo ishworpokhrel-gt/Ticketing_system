@@ -85,16 +85,14 @@ namespace HEI.Support.Service.Implementation
                         }).ToList();
                         await _attachmentFileRepository.AddMultipleEntity(userUploadItems);
                     }
-                    await transaction.CommitAsync();
+                _unitOfWork.Commit();
                 }
                 catch (Exception ex)
                 {
-                    await transaction.RollbackAsync();
+                _unitOfWork.Rollback();
                     throw; 
                 }
             }
-        }
-
         public async Task<List<TicketViewModel>> GetAllTicketsAsync()
         {
             var data = await _ticketRepository.GetAllTicketsAsync();
@@ -130,10 +128,15 @@ namespace HEI.Support.Service.Implementation
             {
                 throw new KeyNotFoundException($"Ticket with Id {ticketId} not found.");
             }
-
-            var result = new TicketViewModel
+            var user = await _userManager.FindByIdAsync(ticket.CreatedBy);
+            var pickedBy = await _ticketRepository.GetTicketAssignee(ticketId, ticket.Status);
+            var ticketDetails = new TicketViewModel
             {
                 Id = ticket.Id,
+                FullName=ticket.FullName,
+                Phone=ticket.Phone,
+                CreatedBy=user.FirstName + " (" + user.LastName+")",
+                Assignee = pickedBy,
                 IssueType = ticket.IssueTypeId,
                 Description = ticket.Description,
                 Priority = ticket.Priority,
@@ -153,7 +156,7 @@ namespace HEI.Support.Service.Implementation
                 }).ToList()
             };
 
-            return result;
+            return ticketDetails;
 
         }
         public async Task<List<UserViewModel>> GetUsersByRoleAsync(string roleName)

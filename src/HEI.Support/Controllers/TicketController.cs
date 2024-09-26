@@ -105,8 +105,9 @@ namespace HEI.Support.WebApp.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public async Task<IActionResult> AssignTo(TicketLogViewModel model, ApplicationUser user)
+        public async Task<IActionResult> AssignTo(TicketLogViewModel model)
         {
+            var user = await _userManager.GetUserAsync(User);
             if (model.TicketId == Guid.Empty || string.IsNullOrEmpty(model.UserId))
             {
                 return BadRequest("Invalid ticket or user.");
@@ -169,6 +170,18 @@ namespace HEI.Support.WebApp.Controllers
             }
 
             return RedirectToAction("Index", "Report");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> TicketDetails(Guid id)
+        {
+            var ticketDetails = await _ticketService.GetTicketByIdAsync(id);
+            if (ticketDetails == null)
+            {
+                return NotFound();
+            }
+
+            return View(ticketDetails);
         }
 
 
