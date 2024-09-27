@@ -99,6 +99,11 @@ namespace HEI.Support.Service.Implementation
             var data = await _ticketRepository.GetAllTicketsAsync();
             return data;
         }
+        public async Task<TicketCountViewModel> GetAllTicketsCountAsync(string? userId = null, DateTime? ticketDatetime = null)
+        {
+            var data = await _ticketRepository.GetAllTicketsCountAsync(userId,ticketDatetime);
+            return data;
+        }
         public async Task<List<string>> UploadImageAsync(List<IFormFile> files)
         {
             var uniqueFileName = new List<string>();
