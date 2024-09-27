@@ -2,128 +2,82 @@
 
 @{
     ViewData["Title"] = "Ticket Details";
+    ViewData["BreadCrum"] = "Ticket Details";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="card">
+    <div class="card-header p-lg-5">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+    <div class="card-body p-lg-17">
+        <h4>Ticket Information</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2 fw-semibold">@Html.DisplayNameFor(model => model.Description)</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(model => model.Description)</dd>
 
-<div>
-    <h4>Ticket Information</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+            <dt class="col-sm-2 fw-semibold">@Html.DisplayNameFor(model => model.FullName)</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(model => model.FullName)</dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FullName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
+            <dt class="col-sm-2 fw-semibold">@Html.DisplayNameFor(model => model.Phone)</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(model => model.Phone)</dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
+            <dt class="col-sm-2 fw-semibold">@Html.DisplayNameFor(model => model.CreatedBy)</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(model => model.CreatedBy)</dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CreatedBy)
-        </dd>
+            <dt class="col-sm-2 fw-semibold">@Html.DisplayNameFor(model => model.Assignee)</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(model => model.Assignee)</dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Assignee)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Assignee)
-        </dd>
+            <dt class="col-sm-2 fw-semibold">@Html.DisplayNameFor(model => model.PriorityValue)</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(model => model.PriorityValue)</dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PriorityValue)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PriorityValue)
-        </dd>
+            <dt class="col-sm-2 fw-semibold">@Html.DisplayNameFor(model => model.StatusValue)</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(model => model.StatusValue)</dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.StatusValue)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.StatusValue)
-        </dd>
+            <dt class="col-sm-2 fw-semibold">@Html.DisplayNameFor(model => model.IssueTypeValue)</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(model => model.IssueTypeValue)</dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.IssueTypeValue)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IssueTypeValue)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TaskCreatedTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TaskCreatedTime)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TaskPickupTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TaskPickupTime)
-        </dd>
+            <dt class="col-sm-2 fw-semibold">@Html.DisplayNameFor(model => model.TaskCreatedTime)</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(model => model.TaskCreatedTime)</dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TaskCompletedTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TaskCompletedTime)
-        </dd>
+            <dt class="col-sm-2 fw-semibold">@Html.DisplayNameFor(model => model.TaskPickupTime)</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(model => model.TaskPickupTime)</dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TaskClosedTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TaskClosedTime)
-        </dd>
+            <dt class="col-sm-2 fw-semibold">@Html.DisplayNameFor(model => model.TaskCompletedTime)</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(model => model.TaskCompletedTime)</dd>
 
-        <dt class="col-sm-2">
-            Attachments
-        </dt>
-        <dd class="col-sm-10">
-            @if (Model.Attachments != null && Model.Attachments.Any())
-            {
-                <ul>
-                    @foreach (var attachment in Model.Attachments)
-                    {
-                        <li>
-                            <a href="@attachment.FilePath" target="_blank">
-                                <img src="@attachment.FilePath" alt="Attachment" style="max-width: 150px; max-height: 150px;" />
-                            </a>
-                        </li>
-                    }
-                </ul>
-            }
-            else
-            {
-                <p>No attachments available.</p>
-            }
-        </dd>
-    </dl>
+            <dt class="col-sm-2 fw-semibold">@Html.DisplayNameFor(model => model.TaskClosedTime)</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(model => model.TaskClosedTime)</dd>
+
+            <dt class="col-sm-2 fw-semibold">Attachments</dt>
+            <dd class="col-sm-10">
+                @if (Model.Attachments != null && Model.Attachments.Any())
+                {
+                    <ul class="list-unstyled">
+                        @foreach (var attachment in Model.Attachments)
+                        {
+                            <li>
+                                <a href="@attachment.FilePath" target="_blank">
+                                    <img src="@attachment.FilePath" alt="Attachment" style="max-width: 150px; max-height: 150px;" />
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p>No attachments available.</p>
+                }
+            </dd>
+        </dl>
+    </div>
 </div>
 
-<div>
-    <!-- Pick Task -->
-    <a class="btn btn-success" onclick="confirmAction(event, '@Url.Action("PickTask", new { id = Model.Id })', 'Are you sure you want to pick the task?')">Pick Task</a> |
-    <!-- Mark as Completed -->
-    <a class="btn btn-warning" onclick="confirmAction(event, '@Url.Action("CompleteTask", new { id = Model.Id })', 'Are you sure you want to complete the task?')">Complete Task</a> |
-    <!-- Close Task -->
-    <a class="btn btn-danger" onclick="confirmAction(event, '@Url.Action("CloseTask", new { id = Model.Id })', 'Are you sure you want to close the task?')">Close Task</a> |
-    <!-- Back to List -->
-    <a class="btn btn-primary" asp-action="Index">Back to List</a>
+<div class="card-body p-lg-17">
+    <div class="d-flex justify-content-start">
+        <a class="btn btn-success me-2" onclick="confirmAction(event, '@Url.Action("PickTask", new { id = Model.Id })', 'Are you sure you want to pick the task?')">Pick Task</a>
+        <a class="btn btn-warning me-2" onclick="confirmAction(event, '@Url.Action("CompleteTask", new { id = Model.Id })', 'Are you sure you want to complete the task?')">Complete Task</a>
+        <a class="btn btn-danger me-2" onclick="confirmAction(event, '@Url.Action("CloseTask", new { id = Model.Id })', 'Are you sure you want to close the task?')">Close Task</a>
+        <a class="btn btn-primary" asp-action="Index">Back to List</a>
+    </div>
 </div>

@@ -9,10 +9,6 @@
         <h1>Edit User</h1>
     </div>
     <div class="card-body p-lg-17">
-        @if (TempData["Message"] != null)
-        {
-            <div class="alert alert-info">@TempData["Message"]</div>
-        }
 
         <form asp-action="EditUser" method="post" class="form">
             <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
