@@ -83,7 +83,26 @@ namespace HEI.Support.WebApp.Areas.Admin.Controllers
                     {
                         ModelState.AddModelError(string.Empty, error);
                     }
-                    return RedirectToAction("RegisterUser");
+                    TempData["Message"] = message;
+                    TempData["IsSuccess"] = false;
+                    var allRoles = await _userManagementService.GetAllRolesAsync();
+                    var filteredRoles = allRoles
+                        .Where(role => role == "EndUser" || role == "Support")
+                        .Select(role => new SelectListItem
+                        {
+                            Value = role,
+                            Text = role
+                        })
+                        .ToList();
+                    var orderedRoles = filteredRoles
+                        .OrderBy(role => role.Text == "EndUser" ? 0 : 1)
+                        .ToList();
+                    var modelView = new RegisterUserViewModel
+                    {
+                        AvailableRoles = orderedRoles
+                    };
+
+                    return View(modelView);
             }
         }
         List<string> SplitStringByDelimiter(string input, char delimiter)
@@ -109,16 +128,20 @@ namespace HEI.Support.WebApp.Areas.Admin.Controllers
             if (result)
             {
                 TempData["Message"] = "User updated successfully.";
+                TempData["IsSuccess"] = true;
                 return RedirectToAction("Index");
             }
 
             ModelState.AddModelError(string.Empty, "Error updating user.");
+            TempData["IsSuccess"] = false;
+            TempData["Message"] = "Error updating user.";
             return View(model);
         }
 
         public async Task<IActionResult> DisableUser(string id)
         {
             var result = await _userManagementService.DisableUserAsync(id);
+            TempData["IsSuccess"] = result;
             TempData["Message"] = result ? "User has been disabled." : "Error disabling user.";
             return RedirectToAction("Index");
         }
@@ -126,6 +149,7 @@ namespace HEI.Support.WebApp.Areas.Admin.Controllers
         public async Task<IActionResult> EnableUser(string id)
         {
             var result = await _userManagementService.EnableUserAsync(id);
+            TempData["IsSuccess"] = result;
             TempData["Message"] = result ? "User has been enabled." : "Error enabling user.";
             return RedirectToAction("Index");
         }
