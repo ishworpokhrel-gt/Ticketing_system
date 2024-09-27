@@ -30,18 +30,20 @@
                         <div class="fs-5 text-dark fw-bold">Filter Options</div>
                     </div>
                     <div class="separator border-gray-200"></div>
+                    <form asp-action="Index" method="get">
                     <div class="px-7 py-5" data-kt-user-table-filter="form">
                         <div class="mb-10">
-                            <label class="form-label fs-6 fw-semibold">Role:</label>
-                            <select class="form-select form-select-solid fw-bold" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true" data-kt-user-table-filter="role" data-hide-search="true">
-                                <option></option>
-                                <option value="Administrator">Administrator</option>
-                                <option value="Analyst">Analyst</option>
-                                <option value="Developer">Developer</option>
-                                <option value="Support">Support</option>
-                                <option value="Trial">Trial</option>
+                            <label class="form-label fs-6 fw-semibold">Issue Type:</label>
+                            <select name="issueTypeId" class="form-select form-select-solid fw-bold" data-kt-select2="true" data-placeholder="Select option" asp-items="ViewBag.IssueTypes" data-allow-clear="true" data-kt-user-table-filter="IssueType" data-hide-search="true">
+                                <option>select IssueType</option>
                             </select>
                         </div>
+                            <div class="mb-10">
+                                <label class="form-label fs-6 fw-semibold">Status:</label>
+                                <select name="status" class="form-select form-select-solid fw-bold" data-kt-select2="true" data-placeholder="Select option" asp-items="ViewBag.TicketStatus" data-allow-clear="true" data-kt-user-table-filter="Status" data-hide-search="true">
+                                    <option>Sekect Status</option>
+                                </select>
+                            </div>
                         <div class="mb-10">
                             <label class="form-label fs-6 fw-semibold">Two Step Verification:</label>
                             <select class="form-select form-select-solid fw-bold" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true" data-kt-user-table-filter="two-step" data-hide-search="true">
@@ -51,9 +53,11 @@
                         </div>
                         <div class="d-flex justify-content-end">
                             <button type="reset" class="btn btn-light btn-active-light-primary fw-semibold me-2 px-6" data-kt-menu-dismiss="true" data-kt-user-table-filter="reset">Reset</button>
-                            <button type="submit" class="btn btn-primary fw-semibold px-6" data-kt-menu-dismiss="true" data-kt-user-table-filter="filter">Apply</button>
+
+                            <button type="submit" asp-controller="Ticket" asp-action="Index" class="btn btn-primary fw-semibold px-6" data-kt-menu-dismiss="true" data-kt-user-table-filter="filter">Apply</button>
                         </div>
                     </div>
+                    </form>
                 </div>
                 <a class="btn btn-primary" asp-controller="Ticket" asp-action="Create">
                     <i class="ki-duotone ki-plus fs-2"></i>Create New Ticket

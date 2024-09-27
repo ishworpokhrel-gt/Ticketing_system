@@ -9,7 +9,7 @@ namespace HEI.Support.Service.Interface
         Task<bool> UpdateTaskStatusAsync(Guid ticketId, string userId, int status);
         Task AssignTicketAsync(Guid ticketId, string assigneeId, ApplicationUser user);
         Task CreateTicketAsync(TicketViewModel model, ApplicationUser user);
-        Task<List<TicketViewModel>> GetAllTicketsAsync();
+        Task<List<TicketViewModel>> GetAllTicketsAsync(int? statusId = null, int? issueTypeId = null);
         Task<TicketViewModel> GetTicketByIdAsync(Guid ticketId);
         Task<IEnumerable<TicketViewModel>> GetTicketsBySupportUserIdAsync(string supportUserId);
         Task<IEnumerable<TicketViewModel>> GetTicketsByUserIdAsync(string userId);

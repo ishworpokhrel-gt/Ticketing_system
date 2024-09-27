@@ -13,11 +13,23 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
         {
             _context = applicationDbContext;
         }
-        public async Task<List<TicketViewModel>> GetAllTicketsAsync()
+
+        public async Task<List<TicketViewModel>> GetAllTicketsAsync(int? statusId = null, int? issueTypeId = null)
         {
-            var data = await _context.Tickets
+            var query = _context.Tickets
                 .Include(t => t.ActivityLogs)
                 .ThenInclude(a => a.User)
+                .AsQueryable(); 
+            if (statusId.HasValue)
+            {
+                query = query.Where(t => t.Status == statusId);
+            }
+            if (issueTypeId.HasValue)
+            {
+                query = query.Where(t => t.IssueTypeId == issueTypeId);
+            }
+
+            var data = await query
                 .OrderByDescending(t => t.CreatedDate)
                 .Select(ticket => new TicketViewModel
                 {
@@ -43,6 +55,37 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
 
             return data;
         }
+
+        //public async Task<List<TicketViewModel>> GetAllTicketsAsync(int status)
+        //{
+        //    var data = await _context.Tickets
+        //        .Include(t => t.ActivityLogs)
+        //        .ThenInclude(a => a.User)
+        //        .OrderByDescending(t => t.CreatedDate)
+        //        .Select(ticket => new TicketViewModel
+        //        {
+        //            Id = ticket.Id,
+        //            FullName = ticket.FullName,
+        //            Phone = ticket.Phone,
+        //            IssueType = ticket.IssueTypeId,
+        //            Description = ticket.Description,
+        //            Priority = ticket.Priority,
+        //            Status = ticket.Status,
+        //            AsignTo = ticket.ActivityLogs
+        //                .Where(al => al.Status == (int)TicketStatus.InProgress)
+        //                .OrderByDescending(al => al.CreatedDate)
+        //                .Select(al => al.User.FirstName + " " + al.User.LastName)
+        //                .FirstOrDefault() ?? "",
+        //            CreatedBy = ticket.ActivityLogs
+        //                .Where(al => al.Status == (int)TicketStatus.Open)
+        //                .OrderByDescending(al => al.CreatedDate)
+        //                .Select(al => al.User.FirstName + " " + al.User.LastName)
+        //                .FirstOrDefault() ?? ""
+        //        })
+        //        .ToListAsync();
+
+        //    return data;
+        //}
 
         public async Task<string> GetTicketAssignee(Guid ticketId, int status)
         {
