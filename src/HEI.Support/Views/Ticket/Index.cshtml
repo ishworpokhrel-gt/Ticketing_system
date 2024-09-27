@@ -31,7 +31,6 @@
                 <td>@item.AsignTo</td>
                 <td>@item.CreatedBy</td>
                 <td>
-                   <a class="btn btn-success" asp-action="PickTask" asp-route-id="@item.Id">Pick Task</a> |
                     <a class="btn btn-info" asp-action="TicketDetails" asp-route-id="@item.Id">Details</a>
                 </td>
             </tr>
@@ -61,8 +60,6 @@
                                 </button>
                             }
                         </form>
-
-
                     </div>
                 </div>
                 <div class="modal-footer">

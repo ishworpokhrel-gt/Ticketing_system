@@ -70,11 +70,13 @@ namespace HEI.Support.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var user = await _userManager.GetUserAsync(User);
                 await _ticketService.CreateTicketAsync(model, user);
-                return RedirectToAction(nameof(Index));
+                TempData["IsSuccess"] = true;
+                TempData["Message"] = "Ticket created successfully.";
+                return RedirectToAction("Index");
             }
+
             var issueTypes = Enum.GetValues(typeof(IssueType))
                          .Cast<IssueType>()
                          .Select(e => new SelectListItem
@@ -94,6 +96,7 @@ namespace HEI.Support.WebApp.Controllers
                         }).ToList();
 
             ViewBag.Priority = priority;
+
             return View(model);
         }
         [HttpPost]
@@ -125,10 +128,9 @@ namespace HEI.Support.WebApp.Controllers
             }
             int status = (int)TicketStatus.InProgress;
             bool success = await _ticketService.UpdateTaskStatusAsync(id, user.Id, status);
-            if (!success)
-            {
-                return NotFound();
-            }
+            TempData["IsSuccess"] = success;
+            TempData["Message"] = success ? "Task picked successfully !!" : "Task already picked !!" ;
+           
             return RedirectToAction("Index");
         }
         [HttpGet]
@@ -141,6 +143,8 @@ namespace HEI.Support.WebApp.Controllers
             }
             int status = (int)TicketStatus.Completed;
             bool success = await _ticketService.UpdateTaskStatusAsync(id, user.Id, status);
+            TempData["IsSuccess"] = success;
+            TempData["Message"] = success ? "Task completed!!" : "Task already completed!!";
             if (!success)
             {
                 return NotFound();
@@ -158,6 +162,8 @@ namespace HEI.Support.WebApp.Controllers
             }
             int status = (int)TicketStatus.Closed;
             bool success = await _ticketService.UpdateTaskStatusAsync(id, user.Id, status);
+            TempData["IsSuccess"] = success;
+            TempData["Message"] = success ? "Task closed!!" : "Task already closed!!";
             if (!success)
             {
                 return NotFound();

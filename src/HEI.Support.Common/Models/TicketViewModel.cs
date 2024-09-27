@@ -22,10 +22,11 @@ namespace HEI.Support.Common.Models
         public List<CommentViewModel>? Comments { get; set; } = new List<CommentViewModel>();
 		public List<AttachmentFileViewModel>? Attachments { get; set; } = new List<AttachmentFileViewModel>();
 		public List<ActivityLogViewModel>? ActivityLogs { get; set; } = new List<ActivityLogViewModel>();
-        public string TaskPickupTime { get; set; }
-        public string TaskCompletedTime { get; set; }
-        public string TaskClosedTime { get; set; }
-        public string TotalTimeTaken { get; set; }
+        public string? TaskCreatedTime { get; set; }
+        public string? TaskPickupTime { get; set; }
+        public string? TaskCompletedTime { get; set; }
+        public string? TaskClosedTime { get; set; }
+        public string? TotalTimeTaken { get; set; }
         public string PriorityValue
 		{
 			get
