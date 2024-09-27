@@ -181,8 +181,31 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
 
             return ticket;
         }
+        public async Task<TicketCountViewModel> GetAllTicketsCountAsync(string? userId = null, DateTime? ticketDatetime = null)
+        {
+            var query = _context.Tickets.AsQueryable();
 
+            if (!string.IsNullOrEmpty(userId))
+            {
+                query = query.Where(t => t.ActivityLogs.Any(al => al.UserId == userId));
+            }
 
+            if (ticketDatetime.HasValue)
+            {
+                query = query.Where(t => t.CreatedDate.Date == ticketDatetime.Value.Date);
+            }
+
+            var ticketCount = new TicketCountViewModel
+            {
+                TotalTickets = await query.CountAsync(),
+                OpenTickets = await query.CountAsync(t => t.Status == (int)TicketStatus.Open),
+                InProgressTickets = await query.CountAsync(t => t.Status == (int)TicketStatus.InProgress),
+                CompletedTickets = await query.CountAsync(t => t.Status == (int)TicketStatus.Completed),
+                ClosedTickets = await query.CountAsync(t => t.Status == (int)TicketStatus.Closed)
+            };
+
+            return ticketCount;
+        }
 
     }
 }

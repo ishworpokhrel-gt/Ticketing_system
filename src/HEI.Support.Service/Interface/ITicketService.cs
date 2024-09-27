@@ -17,5 +17,6 @@ namespace HEI.Support.Service.Interface
         Task<List<UserViewModel>> GetUsersByRoleAsync(string roleName);
         Task UpdateTicketAsync(TicketViewModel model);
         Task<List<string>> UploadImageAsync(List<IFormFile> files);
+        Task<TicketCountViewModel> GetAllTicketsCountAsync(string? userId = null, DateTime? ticketDatetime = null);
     }
 }
