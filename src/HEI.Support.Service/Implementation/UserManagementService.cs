@@ -36,8 +36,6 @@ namespace HEI.Support.Service.Implementation
         }
         public async Task<(bool status, string message)> RegisterUserAsync(RegisterUserViewModel model)
         {
-            string password = GenerateRandomPassword(12);
-
             var user = new ApplicationUser
             {
                 FirstName = model.FirstName,
@@ -47,8 +45,8 @@ namespace HEI.Support.Service.Implementation
                 PhoneNumber = model.PhoneNumber,
                 TelNumber = model.TelNumber,
             };
-
-            var result = await _userManager.CreateAsync(user, password);
+            var password = model.UserName + "@hei." + GetLastThreeDigits(model.TelNumber) + GetLastThreeDigits(model.PhoneNumber);
+            var result = await _userManager.CreateAsync(user,password);
 
             if (result.Succeeded)
             {
@@ -60,7 +58,7 @@ namespace HEI.Support.Service.Implementation
                     var errorMessage = string.Join("~", roleResult.Errors.Select(error => error.Description));
                     return (false, errorMessage);
                 }
-                var userId = await _userManager.GetUserIdAsync(user);
+                // Generate email confirmation token
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
@@ -69,17 +67,50 @@ namespace HEI.Support.Service.Implementation
 
                 var routeValues = new
                 {
-                    userId = userId,
+                    userId = user.Id,
                     code = code
                 };
 
-                var url = _linkGenerator.GetPathByAction("ConfirmEmail", "Account", values: routeValues);
-                var completeUrl = $"{protocol}://{host}{url}";
+                //var confirmUrl = _linkGenerator.GetPathByAction("Login", "Account", values: routeValues);
+                //var completeConfirmUrl = $"{protocol}://{host}{confirmUrl}";
+                var loginUrl = _linkGenerator.GetPathByAction("Login", "Account");
+                var completeConfirmUrl = $"{protocol}://{host}{loginUrl}";
 
-                var email = await _emailSender.SendMailAsync(user.Email, "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(completeUrl)}'>clicking here</a>.");
+                // Constructing the email body
+                var emailBody = $@"
+            <html>
+            <body>
+                <h2>New User Registration Notification</h2>
+                <p>Dear Team,</p>
+                <p>We are pleased to inform you that a new user has been registered in our Support Helpdesk ticketing system. Below are the details:</p>
+    
+                <ul>
+                    <li><strong>Username:</strong> {user.UserName}</li>
+                    <li><strong>Password:</strong> {password}</li>
+                    <li><strong>Tel Number:</strong> {user.TelNumber}</li>
+                    <li><strong>Phone Number:</strong> {user.PhoneNumber}</li>
+                    <li><strong>Click to Login</strong> <a href='{HtmlEncoder.Default.Encode(completeConfirmUrl)}'>here</a></li>
+                </ul>
 
-                await _signInManager.SignInAsync(user, isPersistent: false);
+                <p>Please ensure that the user receives the necessary access and support to begin using the system.</p>
+    
+                <p>If you have any questions, feel free to reach out.</p>
+
+                <table class=""signature-table"">
+                    <tr>
+                        <td>
+                            <strong>Best Regards,</strong><br>
+                            <strong>Head Office</strong><br>
+                            BabarMahal, Kathmandu, Nepal<br>
+                            Fax: +977 1 5245099<br><br>
+                        </td>
+                    </tr>
+                </table>
+            </html>";
+
+                // Send email confirmation link
+                await _emailSender.SendMailAsync(user.Email, "Confidencial!! Welcome to HEI Support!", emailBody);
+
                 return (true, "Registration successful.");
             }
             else
@@ -89,16 +120,17 @@ namespace HEI.Support.Service.Implementation
             }
         }
 
-        private string GenerateRandomPassword(int length)
-        {
-            const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()";
-            using (var rng = new RNGCryptoServiceProvider())
-            {
-                var bytes = new byte[length];
-                rng.GetBytes(bytes);
-                return new string(Enumerable.Range(0, length).Select(i => validChars[bytes[i] % validChars.Length]).ToArray());
-            }
-        }
+
+        //private string GenerateRandomPassword(int length)
+        //      {
+        //          const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()";
+        //          using (var rng = new RNGCryptoServiceProvider())
+        //          {
+        //              var bytes = new byte[length];
+        //              rng.GetBytes(bytes);
+        //              return new string(Enumerable.Range(0, length).Select(i => validChars[bytes[i] % validChars.Length]).ToArray());
+        //          }
+        //      }
 
         public async Task<List<UserViewModel>> GetAllUsersAsync()
         {
@@ -139,6 +171,13 @@ namespace HEI.Support.Service.Implementation
                 }
             }
             return true; // Valid or null date
+        }
+        private string GetLastThreeDigits(string number)
+        {
+            if (string.IsNullOrEmpty(number) || number.Length < 3)
+                return string.Empty;
+
+            return number.Substring(number.Length - 3);
         }
 
         private void LogUserDetails(ApplicationUser user)

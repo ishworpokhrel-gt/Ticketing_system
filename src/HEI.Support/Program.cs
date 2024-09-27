@@ -32,10 +32,12 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 	options.Lockout.AllowedForNewUsers = true;
 	options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(365 * 10);
 	options.Lockout.MaxFailedAccessAttempts = 10;
+
+    options.Tokens.EmailConfirmationTokenProvider = "Default";
+    options.Tokens.PasswordResetTokenProvider = "Default";
 })
   .AddRoles<IdentityRole>()
   .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
-
 
 builder.Services.ConfigureApplicationCookie(o =>
 {

@@ -1,4 +1,12 @@
-﻿<div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
+﻿@using HEI.Support.Domain.Entities
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@inject UserManager<ApplicationUser> UserManager
+@{
+	var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+	var currentUser = await UserManager.FindByIdAsync(userId);
+}
+<div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
 	<div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
 		<a href="/">
 			<img alt="Logo" src="~/assets/media/logos/hei.png" class="h-50px app-sidebar-logo-default" />
@@ -30,19 +38,22 @@
 							</a>
 						</span>
 					</div>
-					<div data-kt-menu-trigger="click" class="menu-item here show">
-						<span class="menu-item">
-							<a class="menu-link" href="/admin/usermanagement">
-								<span class="menu-icon">
-									<i class="ki-duotone ki-abstract-28 fs-2">
-										<span class="path1"></span>
-										<span class="path2"></span>
-									</i>
-								</span>
-								<span class="menu-title">UserManagement</span>
-							</a>
-						</span>
-					</div>
+					@if (currentUser != null && await UserManager.IsInRoleAsync(currentUser, "Admin"))
+					{
+						<div data-kt-menu-trigger="click" class="menu-item here show">
+							<span class="menu-item">
+								<a class="menu-link" href="/admin/usermanagement">
+									<span class="menu-icon">
+										<i class="ki-duotone ki-abstract-28 fs-2">
+											<span class="path1"></span>
+											<span class="path2"></span>
+										</i>
+									</span>
+									<span class="menu-title">UserManagement</span>
+								</a>
+							</span>
+						</div>
+					}
 				</div>
 			</div>
 		</div>
