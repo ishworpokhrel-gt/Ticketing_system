@@ -45,13 +45,19 @@ namespace HEI.Support.Service.Implementation
                 PhoneNumber = model.PhoneNumber,
                 TelNumber = model.TelNumber,
             };
-            var password = model.UserName + "." + model.LastName;
+            var password = model.UserName + "@hei." + GetLastThreeDigits(model.TelNumber) + GetLastThreeDigits(model.PhoneNumber);
             var result = await _userManager.CreateAsync(user,password);
 
             if (result.Succeeded)
             {
-                _logger.LogInformation("User created a new account.");
+                _logger.LogInformation("User created a new account with password.");
+                var roleResult = await _userManager.AddToRoleAsync(user, model.SelectedRole);
 
+                if (!roleResult.Succeeded)
+                {
+                    var errorMessage = string.Join("~", roleResult.Errors.Select(error => error.Description));
+                    return (false, errorMessage);
+                }
                 // Generate email confirmation token
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -65,28 +71,45 @@ namespace HEI.Support.Service.Implementation
                     code = code
                 };
 
-                var confirmUrl = _linkGenerator.GetPathByAction("Login", "Account", values: routeValues);
-                var completeConfirmUrl = $"{protocol}://{host}{confirmUrl}";
+                //var confirmUrl = _linkGenerator.GetPathByAction("Login", "Account", values: routeValues);
+                //var completeConfirmUrl = $"{protocol}://{host}{confirmUrl}";
+                var loginUrl = _linkGenerator.GetPathByAction("Login", "Account");
+                var completeConfirmUrl = $"{protocol}://{host}{loginUrl}";
 
                 // Constructing the email body
                 var emailBody = $@"
             <html>
             <body>
-                <h2>Welcome to Our Service, {user.FirstName}!</h2>
-                <p>Thank you for registering. Your account has been created successfully.</p>
-                <p><strong>Your Account Details:</strong></p>
+                <h2>New User Registration Notification</h2>
+                <p>Dear Team,</p>
+                <p>We are pleased to inform you that a new user has been registered in our Support Helpdesk ticketing system. Below are the details:</p>
+    
                 <ul>
                     <li><strong>Username:</strong> {user.UserName}</li>
                     <li><strong>Password:</strong> {password}</li>
+                    <li><strong>Tel Number:</strong> {user.TelNumber}</li>
+                    <li><strong>Phone Number:</strong> {user.PhoneNumber}</li>
+                    <li><strong>Click to Login</strong> <a href='{HtmlEncoder.Default.Encode(completeConfirmUrl)}'>here</a></li>
                 </ul>
-                <p>Please confirm your email by clicking the link below:</p>
-                <p><a href='{HtmlEncoder.Default.Encode(completeConfirmUrl)}'>Confirm your email</a></p>
-                <p>Best Regards,<br>Your Company Name</p>
-            </body>
+
+                <p>Please ensure that the user receives the necessary access and support to begin using the system.</p>
+    
+                <p>If you have any questions, feel free to reach out.</p>
+
+                <table class=""signature-table"">
+                    <tr>
+                        <td>
+                            <strong>Best Regards,</strong><br>
+                            <strong>Head Office</strong><br>
+                            BabarMahal, Kathmandu, Nepal<br>
+                            Fax: +977 1 5245099<br><br>
+                        </td>
+                    </tr>
+                </table>
             </html>";
 
                 // Send email confirmation link
-                await _emailSender.SendMailAsync(user.Email, "Welcome to Our Service!", emailBody);
+                await _emailSender.SendMailAsync(user.Email, "Confidencial!! Welcome to HEI Support!", emailBody);
 
                 return (true, "Registration successful.");
             }
@@ -148,6 +171,13 @@ namespace HEI.Support.Service.Implementation
                 }
             }
             return true; // Valid or null date
+        }
+        private string GetLastThreeDigits(string number)
+        {
+            if (string.IsNullOrEmpty(number) || number.Length < 3)
+                return string.Empty;
+
+            return number.Substring(number.Length - 3);
         }
 
         private void LogUserDetails(ApplicationUser user)

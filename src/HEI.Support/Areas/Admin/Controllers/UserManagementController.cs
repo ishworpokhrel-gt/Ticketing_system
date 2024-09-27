@@ -83,10 +83,7 @@ namespace HEI.Support.WebApp.Areas.Admin.Controllers
                     {
                         ModelState.AddModelError(string.Empty, error);
                     }
-                    return View();
-
-                default:
-                    return View();
+                    return RedirectToAction("RegisterUser");
             }
         }
         List<string> SplitStringByDelimiter(string input, char delimiter)
