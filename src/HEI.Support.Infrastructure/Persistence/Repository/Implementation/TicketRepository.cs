@@ -73,7 +73,7 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
                     Description = t.Description,
                     Priority = t.Priority,
                     Status = t.Status,
-                    TaskPickupTime = t.ActivityLogs
+                    TaskCreatedTime = t.ActivityLogs
                 .Where(al => al.Status == (int)TicketStatus.Open)
                 .Select(al => al.CreatedDate)
                 .FirstOrDefault() == DateTime.MinValue
@@ -81,7 +81,16 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
                 : t.ActivityLogs
                 .Where(al => al.Status == (int)TicketStatus.Open)
                 .Select(al => al.CreatedDate)
-                .FirstOrDefault().ToString(),
+                .FirstOrDefault().ToString("yyyy-MM-dd HH:mm"),
+                    TaskPickupTime = t.ActivityLogs
+                .Where(al => al.Status == (int)TicketStatus.InProgress)
+                .Select(al => al.CreatedDate)
+                .FirstOrDefault() == DateTime.MinValue
+                ? "N/A"
+                : t.ActivityLogs
+                .Where(al => al.Status == (int)TicketStatus.InProgress)
+                .Select(al => al.CreatedDate)
+                .FirstOrDefault().ToString("yyyy-MM-dd HH:mm"),
 
                     TaskCompletedTime = t.ActivityLogs
                 .Where(al => al.Status == (int)TicketStatus.Completed)
@@ -91,7 +100,7 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
                 : t.ActivityLogs
                 .Where(al => al.Status == (int)TicketStatus.Completed)
                 .Select(al => al.CreatedDate)
-                .FirstOrDefault().ToString(),
+                .FirstOrDefault().ToString("yyyy-MM-dd HH:mm"),
 
 
 
@@ -103,7 +112,7 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
                 : t.ActivityLogs
                 .Where(al => al.Status == (int)TicketStatus.Closed)
                 .Select(al => al.CreatedDate)
-                .FirstOrDefault().ToString(),
+                .FirstOrDefault().ToString("yyyy-MM-dd HH:mm"),
 
                     Assignee = t.ActivityLogs
                         .Where(al => al.Status == (int)TicketStatus.InProgress)
