@@ -94,9 +94,9 @@ namespace HEI.Support.Service.Implementation
                 throw;
             }
         }
-        public async Task<List<TicketViewModel>> GetAllTicketsAsync()
+        public async Task<List<TicketViewModel>> GetAllTicketsAsync(int? statusId = null, int? issueTypeId = null)
         {
-            var data = await _ticketRepository.GetAllTicketsAsync();
+            var data = await _ticketRepository.GetAllTicketsAsync(statusId, issueTypeId);
             return data;
         }
         public async Task<TicketCountViewModel> GetAllTicketsCountAsync(string? userId = null, DateTime? ticketDatetime = null)
@@ -241,6 +241,11 @@ namespace HEI.Support.Service.Implementation
             }
             return false;
         }
+
+        //public async Task <TicketViewModel> FilterByStatus (int status)
+        //{
+        //    var filteredTicket = 
+        //}
         public Task<IEnumerable<TicketViewModel>> GetTicketsBySupportUserIdAsync(string supportUserId)
         {
             throw new NotImplementedException();

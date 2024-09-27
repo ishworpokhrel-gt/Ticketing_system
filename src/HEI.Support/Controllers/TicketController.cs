@@ -17,9 +17,9 @@ namespace HEI.Support.WebApp.Controllers
             _ticketService = ticketService;
             _userManager = userManager;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? status = null, int? issueTypeId = null)
         {
-            var tickets = await _ticketService.GetAllTicketsAsync();
+            var tickets = await _ticketService.GetAllTicketsAsync(status, issueTypeId);
             string roleName = "Support";
             var users = await _ticketService.GetUsersByRoleAsync(roleName);
             var userSelectList = users.Select(u => new SelectListItem
@@ -38,6 +38,15 @@ namespace HEI.Support.WebApp.Controllers
                              Text = e.ToString()
                          }).ToList();
             ViewBag.TicketStatus = ticketStatus;
+            var issueTypes = Enum.GetValues(typeof(IssueType))
+                        .Cast<IssueType>()
+                        .Select(e => new SelectListItem
+                        {
+                            Value = ((int)e).ToString(),
+                            Text = e.ToString()
+                        }).ToList();
+
+            ViewBag.IssueTypes = issueTypes;
             return View(tickets);
         }
         [HttpGet]
