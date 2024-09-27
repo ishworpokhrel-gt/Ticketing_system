@@ -113,9 +113,10 @@
 			}
 			const isSuccess = '@TempData["IsSuccess"]';
 			const message = '@TempData["Message"]';
+			const isError = isSuccess == "false" ? true : false;
 
 			if (message) {
-				displayAlert(message, isSuccess == "true");
+				displayAlert(message, isSuccess);
 			}
 		});
 
