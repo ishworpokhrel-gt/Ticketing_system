@@ -17,9 +17,9 @@ namespace HEI.Support.WebApp.Controllers
             _ticketService = ticketService;
             _userManager = userManager;
         }
-        public async Task<IActionResult> Index(int? status = null, int? issueTypeId = null)
+        public async Task<IActionResult> Index(DateTime? fromDate, DateTime? toDate, int? status = null, int? issueTypeId = null)
         {
-            var tickets = await _ticketService.GetAllTicketsAsync(status, issueTypeId);
+            var tickets = await _ticketService.GetAllTicketsAsync(fromDate, toDate, status, issueTypeId);
             string roleName = "Support";
             var users = await _ticketService.GetUsersByRoleAsync(roleName);
             var userSelectList = users.Select(u => new SelectListItem
@@ -138,29 +138,11 @@ namespace HEI.Support.WebApp.Controllers
             int status = (int)TicketStatus.InProgress;
             bool success = await _ticketService.UpdateTaskStatusAsync(id, user.Id, status);
             TempData["IsSuccess"] = success;
-            TempData["Message"] = success ? "Task picked successfully !!" : "Task already picked !!" ;
+            TempData["Message"] = success ? "Task in progress !!" : "Task already picked !!" ;
            
             return RedirectToAction("Index");
         }
-        [HttpGet]
-        public async Task<IActionResult> CompleteTask(Guid id)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return Unauthorized();
-            }
-            int status = (int)TicketStatus.Completed;
-            bool success = await _ticketService.UpdateTaskStatusAsync(id, user.Id, status);
-            TempData["IsSuccess"] = success;
-            TempData["Message"] = success ? "Task completed!!" : "Task already completed!!";
-            if (!success)
-            {
-                return NotFound();
-            }
-
-            return RedirectToAction("Index", "Ticket");
-        }
+       
         [HttpGet]
         public async Task<IActionResult> CloseTask(Guid id)
         {
