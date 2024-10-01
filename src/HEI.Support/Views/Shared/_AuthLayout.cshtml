@@ -13,18 +13,18 @@
 	<script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if ( localStorage.getItem("data-bs-theme") !== null ) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
 	<div class="d-flex flex-column flex-root" id="kt_app_root">
 		<div class="d-flex flex-column flex-lg-row flex-column-fluid">
-			<div class="d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1">
+			<div class="d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1" style="background:skyblue;">
 				<div class="d-flex flex-center flex-column flex-lg-row-fluid">
 					@RenderBody()
 				</div>
 			</div>
-			<div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center order-1 order-lg-2" style="background-image: url(../../assets/media/misc/auth-bg.png)">
+			<div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center order-1 order-lg-2">
 				<div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
 					<a href="../../demo1/dist/index.html" class="mb-0 mb-lg-12">
 						<img alt="Logo" src="~/assets/media/logos/hei.png" class="h-100px h-lg-75px" />
 					</a>
-					<img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20" src="~/assets/media/misc/auth-screens.png" alt="" />
-					<h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center mb-7">HEI-Support HEI-Helpdesk</h1>
+					<img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20" src="~/assets/img/help.png" alt="" />
+					<h1 class="d-none d-lg-block fs-2qx fw-bolder text-center mb-7">Welcome to HEI Support</h1>
 				</div>
 			</div>
 		</div>

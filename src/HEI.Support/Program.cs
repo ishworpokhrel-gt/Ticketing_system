@@ -14,43 +14,50 @@ using HEI.Support.Infrastructure.SeedData;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure services
 builder.Services.AddControllersWithViews();
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+// Database connection setup
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
+
+// Session and caching
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-	options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
 });
 
-
+// Identity setup
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
-	options.SignIn.RequireConfirmedAccount = false;
-	options.Lockout.AllowedForNewUsers = true;
-	options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(365 * 10);
-	options.Lockout.MaxFailedAccessAttempts = 10;
+    options.SignIn.RequireConfirmedAccount = false;
+    options.Lockout.AllowedForNewUsers = true;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(365 * 10);
+    options.Lockout.MaxFailedAccessAttempts = 10;
 
     options.Tokens.EmailConfirmationTokenProvider = "Default";
     options.Tokens.PasswordResetTokenProvider = "Default";
 })
-  .AddRoles<IdentityRole>()
-  .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
 
-builder.Services.ConfigureApplicationCookie(o =>
+// Cookie configuration
+builder.Services.ConfigureApplicationCookie(options =>
 {
-    o.LoginPath = $"/Account/Login";
-    o.AccessDeniedPath = $"/Account/AccessDenied";
+    options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Account/AccessDenied";
 });
 
+// SMTP configuration
 builder.Services.Configure<SMTPConfig>(builder.Configuration.GetSection("SMTPConfig"));
 builder.Services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<SMTPConfig>>().Value);
 builder.Services.AddSingleton<SmtpClient>(sp =>
 {
     var smtpSettings = sp.GetRequiredService<SMTPConfig>();
-    var smtpClient = new SmtpClient
+    return new SmtpClient
     {
         Host = smtpSettings.SmtpHost,
         Port = smtpSettings.SmtpPort,
@@ -59,32 +66,31 @@ builder.Services.AddSingleton<SmtpClient>(sp =>
         UseDefaultCredentials = false,
         Credentials = new NetworkCredential(smtpSettings.SmtpUsername, smtpSettings.SmtpPassword)
     };
-    return smtpClient;
 });
 
+// Dependency injection for repositories and services
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 builder.Services.AddScoped<IAttachmentFileRepository, AttachmentFileRepository>();
 builder.Services.AddScoped<IActivityLogRepository, ActivityLogRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IUnitOfWorkRepository, UnitOfWorkRepository>();
-
-
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IUserManagementService, UserManagementService>();
-
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 
-
 var app = builder.Build();
+
+// Seed roles and users
 using (var scope = app.Services.CreateScope())
 {
-	var services = scope.ServiceProvider;
-	var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-	await SeedRoleAndUser.Initialize(services, userManager);
+    var services = scope.ServiceProvider;
+    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+    await SeedRoleAndUser.Initialize(services, userManager);
 }
 
+// Middleware configuration
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -93,11 +99,11 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
+app.UseSession(); // Ensure session middleware is included
 
+// Route configuration
 app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
