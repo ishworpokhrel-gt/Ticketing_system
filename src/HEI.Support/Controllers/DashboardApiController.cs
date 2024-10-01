@@ -16,9 +16,10 @@ namespace HEI.Support.WebApp.Controllers
         }
         [HttpGet]
         [Route("GetAllTicketsCountAsync")]
-        public async Task<IActionResult> GetAllTicketsCountAsync(string? userId = null, DateTime? ticketDatetime = null)
+        public async Task<IActionResult> GetAllTicketsCountAsync(DateTime? start = null, DateTime? end = null)
         {
-            var data = await _ticketService.GetAllTicketsCountAsync(userId, ticketDatetime);
+            //string? userId = null;
+			var data = await _ticketService.GetAllTicketsCountAsync(null, start);
             return Ok(data);
         }
     }

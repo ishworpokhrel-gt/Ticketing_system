@@ -2,12 +2,14 @@
 using HEI.Support.Common.Models.Enum;
 using HEI.Support.Domain.Entities;
 using HEI.Support.Service.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HEI.Support.WebApp.Controllers
 {
+    [Authorize]
     public class TicketController : Controller
     {
         private readonly ITicketService _ticketService;

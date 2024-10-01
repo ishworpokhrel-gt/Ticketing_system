@@ -100,8 +100,15 @@ namespace HEI.Support.WebApp.Controllers
 
 		public async Task<IActionResult> LogOut()
 		{
-			await _signInManager.SignOutAsync();
-			return RedirectToAction("Login");
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                user.LastLogoutTime = DateTime.UtcNow;
+                await _userManager.UpdateAsync(user);
+            }
+
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login");
 		}
 
 		public IActionResult ForgotPassword()

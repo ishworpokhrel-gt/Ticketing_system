@@ -44,6 +44,7 @@ namespace HEI.Support.Service.Implementation
                 UserName = model.UserName,
                 PhoneNumber = model.PhoneNumber,
                 TelNumber = model.TelNumber,
+                RegistrationDate = DateTime.UtcNow
             };
             var password = model.UserName + "@hei." + GetLastThreeDigits(model.TelNumber) + GetLastThreeDigits(model.PhoneNumber);
             var result = await _userManager.CreateAsync(user,password);
@@ -108,8 +109,8 @@ namespace HEI.Support.Service.Implementation
                 </table>
             </html>";
 
-                // Send email confirmation link
-                await _emailSender.SendMailAsync(user.Email, "Confidencial!! Welcome to HEI Support!", emailBody);
+                // Send email confirmation link'
+                await _emailSender.SendMailAsync(user.Email, "Confidencial!! Registration to HEI Support!", emailBody);
 
                 return (true, "Registration successful.");
             }
@@ -119,19 +120,6 @@ namespace HEI.Support.Service.Implementation
                 return (false, errorMessage);
             }
         }
-
-
-        //private string GenerateRandomPassword(int length)
-        //      {
-        //          const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()";
-        //          using (var rng = new RNGCryptoServiceProvider())
-        //          {
-        //              var bytes = new byte[length];
-        //              rng.GetBytes(bytes);
-        //              return new string(Enumerable.Range(0, length).Select(i => validChars[bytes[i] % validChars.Length]).ToArray());
-        //          }
-        //      }
-
         public async Task<List<UserViewModel>> GetAllUsersAsync()
         {
             var users = await _userManager.Users.ToListAsync();
@@ -150,10 +138,10 @@ namespace HEI.Support.Service.Implementation
                     UserName = user.UserName,
                     IsLockedOut = user.LockoutEnd.HasValue &&
                                   user.LockoutEnd > DateTimeOffset.UtcNow,
-                    //RegistrationDate = IsValidDate(user.RegistrationDate) ? user.RegistrationDate : null,
-                    //LastLoginTime = IsValidDate(user.LastLoginTime) ? user.LastLoginTime : null,
-                    //LastLogoutTime = IsValidDate(user.LastLogoutTime) ? user.LastLogoutTime : null,
-                    FailedLoginAttempts = user.AccessFailedCount,
+                    LastLoginTime = user.LastLoginTime,
+                    LastLogoutTime = user.LastLogoutTime,
+                    RegistrationDate = user.RegistrationDate,
+                    FailedLoginAttempts = await _signInManager.UserManager.GetAccessFailedCountAsync(user),
                     Role = roles.FirstOrDefault()
                 });
             }

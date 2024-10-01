@@ -35,43 +35,38 @@ namespace HEI.Support.Service.Implementation
         {
             var user = await _signInManager.UserManager.FindByNameAsync(login.UserName);
 
-            // Attempt to sign in the user
+            if (user == null)
+            {
+                return (-1, "Invalid username or password.");
+            }
+
             var result = await _signInManager.PasswordSignInAsync(login.UserName, login.Password, login.RememberMe, lockoutOnFailure: true);
 
             if (result.Succeeded)
             {
-                _logger.LogInformation("User logged in.");
-
-                // Update last login time
+                _logger.LogInformation($"User {login.UserName} logged in successfully.");
                 user.LastLoginTime = DateTime.UtcNow;
                 await _signInManager.UserManager.UpdateAsync(user);
-
                 return (1, "success");
             }
 
-            if (user != null)
+            // Reload user to get the latest AccessFailedCount
+            user = await _signInManager.UserManager.FindByNameAsync(login.UserName);
+
+            if (result.IsLockedOut)
             {
-                if (!user.EmailConfirmed)
-                {
-                    return (2, "Email is not verified.");
-                }
-
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return (3, "Account is locked out.");
-                }
-
-                // Handle invalid login attempt
-                var failedAttempts = await _signInManager.UserManager.GetAccessFailedCountAsync(user);
-                int maxAttempt = _signInManager.UserManager.Options.Lockout.MaxFailedAccessAttempts;
-                int remainingAttempts = maxAttempt - failedAttempts;
-
-                return (4, $"Invalid login attempt. Total remaining attempts: {remainingAttempts}");
+                _logger.LogWarning($"User account {login.UserName} locked out.");
+                return (3, "Account is locked out.");
             }
 
-            return (-1, "Invalid username or password.");
+            int failedAttempts = await _signInManager.UserManager.GetAccessFailedCountAsync(user);
+            int maxAttempt = _signInManager.UserManager.Options.Lockout.MaxFailedAccessAttempts;
+            int remainingAttempts = maxAttempt - failedAttempts;
+
+            _logger.LogWarning($"Invalid login attempt for user {login.UserName}. Total remaining attempts: {remainingAttempts}.");
+            return (4, $"Invalid login attempt. Total remaining attempts: {remainingAttempts}.");
         }
+
 
 
         public async Task<(int status, string message)> RegisterUser(RegisterViewModel userData)

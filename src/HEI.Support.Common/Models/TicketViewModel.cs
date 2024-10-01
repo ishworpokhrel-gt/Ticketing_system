@@ -11,9 +11,15 @@ namespace HEI.Support.Common.Models
 		public int IssueType { get; set; }
 		public string Description { get; set; }
 		public int Priority { get; set; }
-        public string FullName { get; set; }
-        public string Phone { get; set; }
-        public int Status { get; set; }
+		[Required(ErrorMessage = "Full name is required.")]
+		[StringLength(100, ErrorMessage = "Full name cannot be longer than 100 characters.")]
+		[RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Full name can only contain alphabets.")]
+		public string FullName { get; set; }
+
+		[Required(ErrorMessage = "Phone number is required.")]
+		[RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be exactly 10 digits.")]
+		public string Phone { get; set; }
+		public int Status { get; set; }
         public string? CreatedBy { get; set; }
         public string? ReportedbBy { get; set; }
         public string? Assignee { get; set; }
