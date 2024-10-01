@@ -15,6 +15,7 @@ namespace HEI.Support.Common.Models
         public string Phone { get; set; }
         public int Status { get; set; }
         public string? CreatedBy { get; set; }
+        public string? ReportedbBy { get; set; }
         public string? Assignee { get; set; }
         public string? AsignTo { get; set; }
         public List<IFormFile>? Attachment { get; set; }
@@ -22,7 +23,7 @@ namespace HEI.Support.Common.Models
         public List<CommentViewModel>? Comments { get; set; } = new List<CommentViewModel>();
 		public List<AttachmentFileViewModel>? Attachments { get; set; } = new List<AttachmentFileViewModel>();
 		public List<ActivityLogViewModel>? ActivityLogs { get; set; } = new List<ActivityLogViewModel>();
-        public string? TaskCreatedTime { get; set; }
+        public string?   TaskCreatedTime { get; set; }
         public string? TaskPickupTime { get; set; }
         public string? TaskCompletedTime { get; set; }
         public string? TaskClosedTime { get; set; }

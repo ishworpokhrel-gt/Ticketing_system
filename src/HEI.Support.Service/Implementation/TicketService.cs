@@ -94,14 +94,14 @@ namespace HEI.Support.Service.Implementation
                 throw;
             }
         }
-        public async Task<List<TicketViewModel>> GetAllTicketsAsync(int? statusId = null, int? issueTypeId = null)
+        public async Task<List<TicketViewModel>> GetAllTicketsAsync(DateTime? fromDate, DateTime? toDate, int? statusId = null, int? issueTypeId = null)
         {
-            var data = await _ticketRepository.GetAllTicketsAsync(statusId, issueTypeId);
+            var data = await _ticketRepository.GetAllTicketsAsync(fromDate, toDate, statusId, issueTypeId);
             return data;
         }
         public async Task<TicketCountViewModel> GetAllTicketsCountAsync(string? userId = null, DateTime? ticketDatetime = null)
         {
-            var data = await _ticketRepository.GetAllTicketsCountAsync(userId,ticketDatetime);
+            var data = await _ticketRepository.GetAllTicketsCountAsync(userId, ticketDatetime);
             return data;
         }
         public async Task<List<string>> UploadImageAsync(List<IFormFile> files)
@@ -241,11 +241,6 @@ namespace HEI.Support.Service.Implementation
             }
             return false;
         }
-
-        //public async Task <TicketViewModel> FilterByStatus (int status)
-        //{
-        //    var filteredTicket = 
-        //}
         public Task<IEnumerable<TicketViewModel>> GetTicketsBySupportUserIdAsync(string supportUserId)
         {
             throw new NotImplementedException();
@@ -258,6 +253,8 @@ namespace HEI.Support.Service.Implementation
         {
             throw new NotImplementedException();
         }
+
+
 
     }
 }

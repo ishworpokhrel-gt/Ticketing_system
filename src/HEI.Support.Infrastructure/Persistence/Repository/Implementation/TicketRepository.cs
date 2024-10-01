@@ -14,7 +14,7 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
             _context = applicationDbContext;
         }
 
-        public async Task<List<TicketViewModel>> GetAllTicketsAsync(int? statusId = null, int? issueTypeId = null)
+        public async Task<List<TicketViewModel>> GetAllTicketsAsync(DateTime? fromDate, DateTime? toDate, int? statusId = null, int? issueTypeId = null)
         {
             var query = _context.Tickets
                 .Include(t => t.ActivityLogs)
@@ -28,13 +28,21 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
             {
                 query = query.Where(t => t.IssueTypeId == issueTypeId);
             }
+            if (fromDate.HasValue)
+            {
+                query = query.Where(t => t.CreatedDate >= fromDate.Value);
+            }
+            if (toDate.HasValue)
+            {
+                query = query.Where(t => t.CreatedDate <= toDate.Value);
+            }
 
             var data = await query
                 .OrderByDescending(t => t.CreatedDate)
                 .Select(ticket => new TicketViewModel
                 {
                     Id = ticket.Id,
-                    FullName = ticket.FullName,
+                    ReportedbBy = ticket.FullName,
                     Phone = ticket.Phone,
                     IssueType = ticket.IssueTypeId,
                     Description = ticket.Description,
@@ -43,7 +51,7 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
                     AsignTo = ticket.ActivityLogs
                         .Where(al => al.Status == (int)TicketStatus.InProgress)
                         .OrderByDescending(al => al.CreatedDate)
-                        .Select(al => al.User.FirstName + " " + al.User.LastName)
+                        .Select(al => al.User.UserName)
                         .FirstOrDefault() ?? "",
                     CreatedBy = ticket.ActivityLogs
                         .Where(al => al.Status == (int)TicketStatus.Open)
@@ -135,18 +143,6 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
                 .Select(al => al.CreatedDate)
                 .FirstOrDefault().ToString("yyyy-MM-dd HH:mm"),
 
-                    TaskCompletedTime = t.ActivityLogs
-                .Where(al => al.Status == (int)TicketStatus.Completed)
-                .Select(al => al.CreatedDate)
-                .FirstOrDefault() == DateTime.MinValue
-                ? "N/A"
-                : t.ActivityLogs
-                .Where(al => al.Status == (int)TicketStatus.Completed)
-                .Select(al => al.CreatedDate)
-                .FirstOrDefault().ToString("yyyy-MM-dd HH:mm"),
-
-
-
                     TaskClosedTime = t.ActivityLogs
                 .Where(al => al.Status == (int)TicketStatus.Closed)
                 .Select(al => al.CreatedDate)
@@ -200,7 +196,6 @@ namespace HEI.Support.Infrastructure.Persistence.Repository.Implementation
                 TotalTickets = await query.CountAsync(),
                 OpenTickets = await query.CountAsync(t => t.Status == (int)TicketStatus.Open),
                 InProgressTickets = await query.CountAsync(t => t.Status == (int)TicketStatus.InProgress),
-                CompletedTickets = await query.CountAsync(t => t.Status == (int)TicketStatus.Completed),
                 ClosedTickets = await query.CountAsync(t => t.Status == (int)TicketStatus.Closed)
             };
 
