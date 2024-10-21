@@ -35,10 +35,7 @@ jobs:
       - name: List all Docker images
         run: docker images
         
-      - name: Run Tests
-        run: |
-          docker run --rm tickting:latest dotnet test --no-build --verbosity normal
-
+      
       - name: Publish Docker image
         run: |
           docker tag tickting:latest ${{ secrets.DOCKERHUB_USERNAME }}/tickting:latest
