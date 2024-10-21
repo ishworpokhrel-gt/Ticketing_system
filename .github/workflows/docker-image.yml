@@ -1,5 +1,4 @@
 name: .NET 8 CI with Docker
-
 on:
   push:
     branches:
@@ -30,14 +29,15 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker buildx build --tag tickting:latest --file src/HEI.Support/Dockerfile --load .
-          
+          docker buildx build --tag tickting:${{ github.sha }} --file src/HEI.Support/Dockerfile --load .
+
       - name: List all Docker images
         run: docker images
         
-      
       - name: Publish Docker image
         run: |
-          docker tag tickting:latest ${{ secrets.DOCKERHUB_USERNAME }}/tickting:latest
+          docker tag tickting:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/tickting:${{ github.sha }}
+          docker tag tickting:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/tickting:latest
           echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/tickting:${{ github.sha }}
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/tickting:latest
