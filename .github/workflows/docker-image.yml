@@ -30,7 +30,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker buildx build --tag my-app:latest --file src/Web/Dockerfile --load .
+          docker buildx build --tag my-app:latest --file src/HEI.Support/Dockerfile --load .
           
       - name: List all Docker images
         run: docker images
