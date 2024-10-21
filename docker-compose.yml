@@ -1,0 +1,6 @@
+services:
+  hei.support.webapp:
+    image: ${DOCKER_REGISTRY-}heisupportwebapp
+    build:
+      context: .
+      dockerfile: src/HEI.Support/Dockerfile
