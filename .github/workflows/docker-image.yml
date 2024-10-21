@@ -30,13 +30,13 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker buildx build --tag my-app:latest --file src/HEI.Support/Dockerfile --load .
+          docker buildx build --tag ticketing:latest --file src/HEI.Support/Dockerfile --load .
           
       - name: List all Docker images
         run: docker images
 
       - name: Publish Docker image
         run: |
-          docker tag my-app:latest ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
+          docker tag ticketing:latest ${{ secrets.DOCKERHUB_USERNAME }}/ticketing:latest
           echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/ticketing:latest
